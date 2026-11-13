@@ -136,6 +136,11 @@ class PlanningBrief(BaseModel):
     assumptions: list[Assumption] = Field(default_factory=list)
     caveats: list[Caveat] = Field(default_factory=list)
 
+    @property
+    def party_size(self) -> int:
+        """Total travellers, adults plus children."""
+        return self.travellers.adults + len(self.travellers.children_ages)
+
 
 class ClarificationRequest(BaseModel):
     outcome: Literal["clarification"] = "clarification"
@@ -163,11 +168,14 @@ class NoFeasiblePlan(BaseModel):
 
 class ViolationKind(StrEnum):
     UNKNOWN_ID = "UNKNOWN_ID"
+    ID_MISMATCH = "ID_MISMATCH"
+    MISSING_FLIGHT = "MISSING_FLIGHT"
     EXCLUDED_DESTINATION = "EXCLUDED_DESTINATION"
     OVER_BUDGET = "OVER_BUDGET"
     OVER_NIGHTLY_CAP = "OVER_NIGHTLY_CAP"
     MISSING_AMENITY = "MISSING_AMENITY"
     BELOW_MIN_STARS = "BELOW_MIN_STARS"
+    WRONG_STYLE = "WRONG_STYLE"
     NO_DATA = "NO_DATA"
 
 

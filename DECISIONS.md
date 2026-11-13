@@ -19,6 +19,10 @@ One line each: X over Y because Z.
 - Fixtures written by Haiku in a one-off committed script and validated against the catalog models, over hand-written data, because 17 destinations × hotels × routes is tedious and the schema check catches bad generations. Unit tests use a small hand-written catalog instead, so they don't depend on generated data.
 - Fixtures live in `data/` at the repo root rather than inside the package, because they're reviewable inputs rather than code. Tradeoff: a wheel install wouldn't include them, which doesn't matter for a source checkout run with `uv run`.
 - Typed ID aliases (`DestinationId`, `FlightId`, `HotelId`, `AirportCode`) with patterns over bare `str`, because signatures say what they operate on, and a malformed ID fails schema validation before it ever reaches the validator.
+- Hotel style (e.g. "boutique") is a hard requirement like amenities and min stars, rather than a soft preference, because the user stated it and enforcing all three the same way is consistent.
+- `near` resolves through a small table of origin-airport coordinates in `tools.py`, rather than requiring every origin to also be a destination, because users say "near Lisbon" where Lisbon is where they already are.
+- `find_destinations` drops destinations that match none of the stated preferences, rather than returning everything ranked, because a zero-overlap pick is never what the user asked for. Tradeoff: a narrow vocabulary match can return nothing; the planner then falls back to `NoFeasiblePlan`.
+- Exclusions match an exact IATA code or a case-insensitive name substring, rather than exact names only, so "Madeira" matches "Madeira (Funchal)". Tradeoff: a short term could over-match.
 - Pricing rules: children pay full fare and rooms = ⌈party / room capacity⌉, over modelling child fares and room types, because the mock data doesn't justify more.
 
 ## Missing information

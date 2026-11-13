@@ -89,7 +89,7 @@ def search_flights(
     if brief.origin is None:
         return []
     return tools.search_flights(
-        ctx.deps.catalog, brief.origin, destination, brief.depart_date, _party_size(brief)
+        ctx.deps.catalog, brief.origin, destination, brief.depart_date, brief.party_size
     )
 
 
@@ -103,7 +103,7 @@ def search_hotels(ctx: RunContext[PlannerDeps], city: DestinationId) -> list[too
     """
     brief = ctx.deps.brief
     return tools.search_hotels(
-        ctx.deps.catalog, city, brief.depart_date, brief.nights, _party_size(brief)
+        ctx.deps.catalog, city, brief.depart_date, brief.nights, brief.party_size
     )
 
 
@@ -131,11 +131,6 @@ def enforce_constraints(
         details = "; ".join(f"{v.kind}: {v.detail}" for v in violations)
         raise ModelRetry(f"Proposal rejected: {details}")
     return output
-
-
-def _party_size(brief: PlanningBrief) -> int:
-    """Total travellers, adults plus children."""
-    return brief.travellers.adults + len(brief.travellers.children_ages)
 
 
 def plan_trip(brief: PlanningBrief, model: str, catalog: Catalog) -> TripSuggestion | Infeasible:

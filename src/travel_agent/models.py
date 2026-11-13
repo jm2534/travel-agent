@@ -35,10 +35,15 @@ class MonthDay(BaseModel):
 
 
 class Timeframe(BaseModel):
-    """When the trip being planned happens; never the dates of another event it follows."""
+    """When the trip being planned happens.
+
+    If it's added on to another event (a conference, a wedding), the trip starts the day that event
+    ends: "in Chicago for a conference Mar 2-5, then a few days somewhere" -> start Mar 5.
+    """
 
     start: MonthDay | None = Field(
-        None, description="Explicit first day of the trip, if stated or directly implied."
+        None,
+        description="First day of the trip, if stated or implied (e.g. by an event it follows).",
     )
     end: MonthDay | None = Field(None, description="Explicit last day of the trip, if stated.")
     month: int | None = Field(
@@ -83,7 +88,8 @@ class TripConstraints(BaseModel):
 
     origin: AirportCode | None = Field(
         None,
-        description="Where the trip starts. If they already have a flight somewhere, that place.",
+        description="Where the trip starts: the stated departure airport, or the city the user "
+        "will already be in ('in Chicago for a conference, then...' -> ORD).",
     )
     destination: str | None = Field(None, description="A specific city if named, e.g. 'Tokyo'.")
     region: Region | None = None

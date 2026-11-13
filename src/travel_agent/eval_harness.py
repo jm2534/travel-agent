@@ -209,14 +209,18 @@ def render_report(config: Config, extraction: list[CaseResult], planner: list[Ca
 
 
 def main() -> None:
-    """Run every case through both stages and write the report."""
+    """Run cases through both stages; `travel-agent-eval [case-id ...]` runs a subset.
+
+    Only a full run writes evals/report.md, so the committed report always covers every case.
+    """
     try:
         config = load_config()
     except ConfigError as e:
         print(f"error: {e}", file=sys.stderr)
         raise SystemExit(2) from e
 
-    cases = EvalCase.load_all()
+    selected = sys.argv[1:]
+    cases = [c for c in EvalCase.load_all() if not selected or c.id in selected]
     catalog = Catalog.load()
     extraction, planner = [], []
     for case in cases:
@@ -226,7 +230,8 @@ def main() -> None:
         planner.append(run_planner_case(case, config, catalog))
 
     report = render_report(config, extraction, planner)
-    REPORT_PATH.write_text(report)
+    if not selected:
+        REPORT_PATH.write_text(report)
     print(report)
 
 

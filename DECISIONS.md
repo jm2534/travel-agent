@@ -17,6 +17,7 @@ One line each: X over Y because Z.
 - Closed vocabularies (`Tag`, `Region`, `Amenity`, `HotelStyle` as `Literal`s) over free text, because `find_destinations` then filters deterministically and evals can assert on exact values. **Limitation:** any preference outside the vocabulary ("ski", "wine region", "pet-friendly") is lost at extraction, silently and without a caveat.
 - Static JSON plus a seasonal multiplier in code over fixtures stored per date, because any date then works and the fixtures stay small. **Limitation:** there are only two price levels (peak at 1.3x, and off-peak).
 - Fixtures written by Haiku in a one-off committed script and validated against the catalog models, over hand-written data, because 17 destinations × hotels × routes is tedious and the schema check catches bad generations. Unit tests use a small hand-written catalog instead, so they don't depend on generated data.
+- Fixtures live in `data/` at the repo root rather than inside the package, because they're reviewable inputs rather than code. Tradeoff: a wheel install wouldn't include them, which doesn't matter for a source checkout run with `uv run`.
 - Typed ID aliases (`DestinationId`, `FlightId`, `HotelId`, `AirportCode`) with patterns over bare `str`, because signatures say what they operate on, and a malformed ID fails schema validation before it ever reaches the validator.
 - Pricing rules: children pay full fare and rooms = ⌈party / room capacity⌉, over modelling child fares and room types, because the mock data doesn't justify more.
 

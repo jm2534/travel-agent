@@ -1,0 +1,620 @@
+[
+  {
+    "id": "CUN",
+    "name": "Cancun",
+    "country": "Mexico",
+    "region": "mexico",
+    "lat": 21.16,
+    "lon": -86.85,
+    "tags": [
+      "beach",
+      "warm",
+      "family",
+      "nightlife",
+      "relaxing"
+    ],
+    "touristiness": 5,
+    "avg_high_c": [
+      28.0,
+      28.0,
+      29.0,
+      30.0,
+      31.0,
+      32.0,
+      33.0,
+      33.0,
+      32.0,
+      31.0,
+      30.0,
+      28.0
+    ],
+    "peak_months": [
+      12,
+      1,
+      2,
+      3,
+      4,
+      7,
+      8
+    ]
+  },
+  {
+    "id": "PUJ",
+    "name": "Punta Cana",
+    "country": "Dominican Republic",
+    "region": "caribbean",
+    "lat": 18.58,
+    "lon": -68.4,
+    "tags": [
+      "beach",
+      "relaxing",
+      "warm",
+      "romantic",
+      "family"
+    ],
+    "touristiness": 4,
+    "avg_high_c": [
+      29.0,
+      29.0,
+      30.0,
+      30.0,
+      31.0,
+      32.0,
+      32.0,
+      32.0,
+      32.0,
+      31.0,
+      30.0,
+      29.0
+    ],
+    "peak_months": [
+      12,
+      1,
+      2,
+      3,
+      7,
+      8
+    ]
+  },
+  {
+    "id": "SJU",
+    "name": "San Juan",
+    "country": "Puerto Rico",
+    "region": "caribbean",
+    "lat": 18.44,
+    "lon": -66.06,
+    "tags": [
+      "food",
+      "culture",
+      "nightlife",
+      "walkable",
+      "warm"
+    ],
+    "touristiness": 4,
+    "avg_high_c": [
+      30.0,
+      30.0,
+      30.0,
+      31.0,
+      31.0,
+      32.0,
+      32.0,
+      33.0,
+      33.0,
+      32.0,
+      31.0,
+      30.0
+    ],
+    "peak_months": [
+      12,
+      1,
+      2,
+      3,
+      4,
+      7
+    ]
+  },
+  {
+    "id": "MBJ",
+    "name": "Montego Bay",
+    "country": "Jamaica",
+    "region": "caribbean",
+    "lat": 18.51,
+    "lon": -77.91,
+    "tags": [
+      "beach",
+      "relaxing",
+      "warm",
+      "nature",
+      "family"
+    ],
+    "touristiness": 3,
+    "avg_high_c": [
+      29.0,
+      29.0,
+      30.0,
+      31.0,
+      31.0,
+      32.0,
+      32.0,
+      32.0,
+      32.0,
+      31.0,
+      30.0,
+      29.0
+    ],
+    "peak_months": [
+      12,
+      1,
+      2,
+      3,
+      4,
+      7,
+      8
+    ]
+  },
+  {
+    "id": "MCO",
+    "name": "Orlando",
+    "country": "United States",
+    "region": "north_america",
+    "lat": 28.54,
+    "lon": -81.38,
+    "tags": [
+      "family",
+      "nightlife",
+      "warm",
+      "nature"
+    ],
+    "touristiness": 5,
+    "avg_high_c": [
+      22.0,
+      24.0,
+      26.0,
+      28.0,
+      31.0,
+      32.0,
+      33.0,
+      33.0,
+      32.0,
+      29.0,
+      26.0,
+      23.0
+    ],
+    "peak_months": [
+      3,
+      4,
+      6,
+      7,
+      8,
+      12
+    ]
+  },
+  {
+    "id": "SAN",
+    "name": "San Diego",
+    "country": "United States",
+    "region": "north_america",
+    "lat": 32.73,
+    "lon": -117.19,
+    "tags": [
+      "beach",
+      "walkable",
+      "food",
+      "relaxing",
+      "family"
+    ],
+    "touristiness": 3,
+    "avg_high_c": [
+      19.0,
+      19.0,
+      20.0,
+      21.0,
+      22.0,
+      24.0,
+      26.0,
+      27.0,
+      27.0,
+      25.0,
+      22.0,
+      19.0
+    ],
+    "peak_months": [
+      6,
+      7,
+      8
+    ]
+  },
+  {
+    "id": "BCN",
+    "name": "Barcelona",
+    "country": "Spain",
+    "region": "europe",
+    "lat": 41.39,
+    "lon": 2.17,
+    "tags": [
+      "food",
+      "culture",
+      "walkable",
+      "nightlife",
+      "romantic"
+    ],
+    "touristiness": 5,
+    "avg_high_c": [
+      14.0,
+      15.0,
+      17.0,
+      18.0,
+      21.0,
+      25.0,
+      28.0,
+      28.0,
+      25.0,
+      21.0,
+      17.0,
+      14.0
+    ],
+    "peak_months": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  {
+    "id": "FCO",
+    "name": "Rome",
+    "country": "Italy",
+    "region": "europe",
+    "lat": 41.9,
+    "lon": 12.5,
+    "tags": [
+      "culture",
+      "food",
+      "walkable",
+      "romantic"
+    ],
+    "touristiness": 5,
+    "avg_high_c": [
+      12.0,
+      13.0,
+      16.0,
+      19.0,
+      23.0,
+      28.0,
+      31.0,
+      31.0,
+      27.0,
+      22.0,
+      17.0,
+      13.0
+    ],
+    "peak_months": [
+      4,
+      5,
+      6,
+      9,
+      10
+    ]
+  },
+  {
+    "id": "LYS",
+    "name": "Lyon",
+    "country": "France",
+    "region": "europe",
+    "lat": 45.76,
+    "lon": 4.84,
+    "tags": [
+      "food",
+      "culture",
+      "walkable",
+      "quiet"
+    ],
+    "touristiness": 2,
+    "avg_high_c": [
+      6.0,
+      8.0,
+      12.0,
+      16.0,
+      20.0,
+      25.0,
+      28.0,
+      27.0,
+      23.0,
+      17.0,
+      11.0,
+      7.0
+    ],
+    "peak_months": [
+      6,
+      7,
+      8,
+      12
+    ]
+  },
+  {
+    "id": "JTR",
+    "name": "Santorini",
+    "country": "Greece",
+    "region": "europe",
+    "lat": 36.39,
+    "lon": 25.46,
+    "tags": [
+      "beach",
+      "romantic",
+      "nature",
+      "warm"
+    ],
+    "touristiness": 5,
+    "avg_high_c": [
+      14.0,
+      14.0,
+      16.0,
+      18.0,
+      22.0,
+      27.0,
+      29.0,
+      29.0,
+      27.0,
+      23.0,
+      19.0,
+      16.0
+    ],
+    "peak_months": [
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  {
+    "id": "DBV",
+    "name": "Dubrovnik",
+    "country": "Croatia",
+    "region": "europe",
+    "lat": 42.65,
+    "lon": 18.09,
+    "tags": [
+      "walkable",
+      "culture",
+      "romantic",
+      "warm",
+      "beach"
+    ],
+    "touristiness": 5,
+    "avg_high_c": [
+      11.0,
+      12.0,
+      14.0,
+      17.0,
+      22.0,
+      26.0,
+      29.0,
+      29.0,
+      25.0,
+      21.0,
+      16.0,
+      12.0
+    ],
+    "peak_months": [
+      6,
+      7,
+      8
+    ]
+  },
+  {
+    "id": "TIV",
+    "name": "Kotor",
+    "country": "Montenegro",
+    "region": "europe",
+    "lat": 42.42,
+    "lon": 18.77,
+    "tags": [
+      "quiet",
+      "nature",
+      "walkable",
+      "warm",
+      "food"
+    ],
+    "touristiness": 2,
+    "avg_high_c": [
+      10.0,
+      11.0,
+      14.0,
+      17.0,
+      22.0,
+      26.0,
+      29.0,
+      29.0,
+      25.0,
+      20.0,
+      15.0,
+      11.0
+    ],
+    "peak_months": [
+      7,
+      8
+    ]
+  },
+  {
+    "id": "OPO",
+    "name": "Porto",
+    "country": "Portugal",
+    "region": "europe",
+    "lat": 41.15,
+    "lon": -8.61,
+    "tags": [
+      "food",
+      "walkable",
+      "culture",
+      "romantic",
+      "nightlife"
+    ],
+    "touristiness": 3,
+    "avg_high_c": [
+      13.0,
+      14.0,
+      16.0,
+      17.0,
+      20.0,
+      23.0,
+      25.0,
+      25.0,
+      23.0,
+      20.0,
+      16.0,
+      13.0
+    ],
+    "peak_months": [
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  {
+    "id": "SVQ",
+    "name": "Seville",
+    "country": "Spain",
+    "region": "europe",
+    "lat": 37.39,
+    "lon": -5.98,
+    "tags": [
+      "culture",
+      "warm",
+      "food",
+      "walkable",
+      "romantic"
+    ],
+    "touristiness": 4,
+    "avg_high_c": [
+      16.0,
+      18.0,
+      21.0,
+      23.0,
+      27.0,
+      32.0,
+      35.0,
+      35.0,
+      31.0,
+      26.0,
+      20.0,
+      16.0
+    ],
+    "peak_months": [
+      4,
+      5,
+      6,
+      9,
+      10
+    ]
+  },
+  {
+    "id": "FNC",
+    "name": "Madeira (Funchal)",
+    "country": "Portugal",
+    "region": "europe",
+    "lat": 32.65,
+    "lon": -16.91,
+    "tags": [
+      "nature",
+      "relaxing",
+      "warm",
+      "walkable",
+      "quiet"
+    ],
+    "touristiness": 2,
+    "avg_high_c": [
+      19.0,
+      19.0,
+      20.0,
+      20.0,
+      21.0,
+      23.0,
+      25.0,
+      26.0,
+      26.0,
+      24.0,
+      22.0,
+      20.0
+    ],
+    "peak_months": [
+      7,
+      8,
+      12
+    ]
+  },
+  {
+    "id": "RAK",
+    "name": "Marrakech",
+    "country": "Morocco",
+    "region": "africa",
+    "lat": 31.63,
+    "lon": -8.01,
+    "tags": [
+      "culture",
+      "food",
+      "warm",
+      "romantic"
+    ],
+    "touristiness": 4,
+    "avg_high_c": [
+      18.0,
+      20.0,
+      23.0,
+      26.0,
+      30.0,
+      35.0,
+      38.0,
+      38.0,
+      34.0,
+      29.0,
+      23.0,
+      19.0
+    ],
+    "peak_months": [
+      3,
+      4,
+      10,
+      11,
+      12
+    ]
+  },
+  {
+    "id": "HND",
+    "name": "Tokyo",
+    "country": "Japan",
+    "region": "asia",
+    "lat": 35.68,
+    "lon": 139.69,
+    "tags": [
+      "food",
+      "culture",
+      "walkable",
+      "nightlife"
+    ],
+    "touristiness": 4,
+    "avg_high_c": [
+      10.0,
+      11.0,
+      14.0,
+      19.0,
+      23.0,
+      26.0,
+      29.0,
+      31.0,
+      27.0,
+      21.0,
+      16.0,
+      12.0
+    ],
+    "peak_months": [
+      3,
+      4,
+      5,
+      10,
+      11
+    ]
+  }
+]

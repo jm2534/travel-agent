@@ -1,4 +1,4 @@
-"""One-off: have Haiku write the mock catalog in src/travel_agent/data/*.json.
+"""One-off: have Haiku write the mock catalog in data/*.json at the repo root.
 
 The output is committed; this script never runs at runtime.
 

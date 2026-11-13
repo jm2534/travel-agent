@@ -16,7 +16,7 @@ from travel_agent.models import (
     Tag,
 )
 
-DATA_DIR = Path(__file__).parent / "data"
+DATA_DIR = Path(__file__).resolve().parents[2] / "data"  # repo root; the fixtures aren't packaged
 
 
 class Destination(BaseModel):

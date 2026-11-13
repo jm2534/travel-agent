@@ -47,7 +47,7 @@ Each result carries a stable ID. An empty result is a normal return (an empty li
 - Examples: search_flights("JFK","CUN",...) → ≥2 fares; search_flights("JFK","XXX",...) → []
 - On failure: an unknown city or route returns [], and the planner must handle it.
 - Status: todo
-- Code: src/travel_agent/tools.py, catalog.py, pricing.py, data/
+- Code: src/travel_agent/tools.py, catalog.py, pricing.py; fixtures in data/ (repo root)
 
 ### R5: Planner with code-enforced rules (MUST)
 The planner LLM picks options by **ID only**. An output validator recomputes cost from the mock data and raises `ModelRetry` when any of these hold: an ID is unknown, an excluded destination is chosen, a hard cap is exceeded, or a required hotel amenity is missing. The model never does the arithmetic.

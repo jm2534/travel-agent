@@ -1,0 +1,920 @@
+[
+  {
+    "id": "F-JFK-CUN-1",
+    "origin": "JFK",
+    "destination": "CUN",
+    "airline": "JetBlue",
+    "stops": 1,
+    "duration_hours": 7.5,
+    "base_fare_usd": 389.0
+  },
+  {
+    "id": "F-JFK-CUN-2",
+    "origin": "JFK",
+    "destination": "CUN",
+    "airline": "Delta",
+    "stops": 0,
+    "duration_hours": 4.5,
+    "base_fare_usd": 612.0
+  },
+  {
+    "id": "F-JFK-PUJ-1",
+    "origin": "JFK",
+    "destination": "PUJ",
+    "airline": "Spirit",
+    "stops": 1,
+    "duration_hours": 6.5,
+    "base_fare_usd": 341.0
+  },
+  {
+    "id": "F-JFK-PUJ-2",
+    "origin": "JFK",
+    "destination": "PUJ",
+    "airline": "American",
+    "stops": 0,
+    "duration_hours": 4.0,
+    "base_fare_usd": 578.0
+  },
+  {
+    "id": "F-JFK-SJU-1",
+    "origin": "JFK",
+    "destination": "SJU",
+    "airline": "Frontier",
+    "stops": 1,
+    "duration_hours": 6.0,
+    "base_fare_usd": 298.0
+  },
+  {
+    "id": "F-JFK-SJU-2",
+    "origin": "JFK",
+    "destination": "SJU",
+    "airline": "JetBlue",
+    "stops": 0,
+    "duration_hours": 4.0,
+    "base_fare_usd": 524.0
+  },
+  {
+    "id": "F-JFK-MBJ-1",
+    "origin": "JFK",
+    "destination": "MBJ",
+    "airline": "Spirit",
+    "stops": 1,
+    "duration_hours": 7.0,
+    "base_fare_usd": 366.0
+  },
+  {
+    "id": "F-JFK-MBJ-2",
+    "origin": "JFK",
+    "destination": "MBJ",
+    "airline": "JetBlue",
+    "stops": 0,
+    "duration_hours": 4.25,
+    "base_fare_usd": 559.0
+  },
+  {
+    "id": "F-JFK-MCO-1",
+    "origin": "JFK",
+    "destination": "MCO",
+    "airline": "Frontier",
+    "stops": 0,
+    "duration_hours": 2.75,
+    "base_fare_usd": 224.0
+  },
+  {
+    "id": "F-JFK-MCO-2",
+    "origin": "JFK",
+    "destination": "MCO",
+    "airline": "Delta",
+    "stops": 0,
+    "duration_hours": 2.75,
+    "base_fare_usd": 398.0
+  },
+  {
+    "id": "F-JFK-SAN-1",
+    "origin": "JFK",
+    "destination": "SAN",
+    "airline": "United",
+    "stops": 1,
+    "duration_hours": 8.0,
+    "base_fare_usd": 412.0
+  },
+  {
+    "id": "F-JFK-SAN-2",
+    "origin": "JFK",
+    "destination": "SAN",
+    "airline": "JetBlue",
+    "stops": 0,
+    "duration_hours": 6.0,
+    "base_fare_usd": 643.0
+  },
+  {
+    "id": "F-JFK-BCN-1",
+    "origin": "JFK",
+    "destination": "BCN",
+    "airline": "Norse",
+    "stops": 1,
+    "duration_hours": 11.0,
+    "base_fare_usd": 684.0
+  },
+  {
+    "id": "F-JFK-BCN-2",
+    "origin": "JFK",
+    "destination": "BCN",
+    "airline": "Iberia",
+    "stops": 0,
+    "duration_hours": 7.5,
+    "base_fare_usd": 1196.0
+  },
+  {
+    "id": "F-JFK-FCO-1",
+    "origin": "JFK",
+    "destination": "FCO",
+    "airline": "Turkish Airlines",
+    "stops": 1,
+    "duration_hours": 12.5,
+    "base_fare_usd": 702.0
+  },
+  {
+    "id": "F-JFK-FCO-2",
+    "origin": "JFK",
+    "destination": "FCO",
+    "airline": "ITA Airways",
+    "stops": 0,
+    "duration_hours": 9.0,
+    "base_fare_usd": 1248.0
+  },
+  {
+    "id": "F-JFK-LYS-1",
+    "origin": "JFK",
+    "destination": "LYS",
+    "airline": "Air France",
+    "stops": 1,
+    "duration_hours": 11.0,
+    "base_fare_usd": 731.0
+  },
+  {
+    "id": "F-JFK-LYS-2",
+    "origin": "JFK",
+    "destination": "LYS",
+    "airline": "Air France",
+    "stops": 0,
+    "duration_hours": 8.5,
+    "base_fare_usd": 1285.0
+  },
+  {
+    "id": "F-JFK-JTR-1",
+    "origin": "JFK",
+    "destination": "JTR",
+    "airline": "Turkish Airlines",
+    "stops": 1,
+    "duration_hours": 14.0,
+    "base_fare_usd": 876.0
+  },
+  {
+    "id": "F-JFK-JTR-2",
+    "origin": "JFK",
+    "destination": "JTR",
+    "airline": "Aegean",
+    "stops": 0,
+    "duration_hours": 11.0,
+    "base_fare_usd": 1415.0
+  },
+  {
+    "id": "F-JFK-DBV-1",
+    "origin": "JFK",
+    "destination": "DBV",
+    "airline": "Turkish Airlines",
+    "stops": 1,
+    "duration_hours": 13.0,
+    "base_fare_usd": 849.0
+  },
+  {
+    "id": "F-JFK-DBV-2",
+    "origin": "JFK",
+    "destination": "DBV",
+    "airline": "Croatia Airlines",
+    "stops": 0,
+    "duration_hours": 10.0,
+    "base_fare_usd": 1368.0
+  },
+  {
+    "id": "F-JFK-TIV-1",
+    "origin": "JFK",
+    "destination": "TIV",
+    "airline": "Turkish Airlines",
+    "stops": 1,
+    "duration_hours": 13.5,
+    "base_fare_usd": 864.0
+  },
+  {
+    "id": "F-JFK-TIV-2",
+    "origin": "JFK",
+    "destination": "TIV",
+    "airline": "Montenegro Airlines",
+    "stops": 0,
+    "duration_hours": 10.5,
+    "base_fare_usd": 1342.0
+  },
+  {
+    "id": "F-JFK-OPO-1",
+    "origin": "JFK",
+    "destination": "OPO",
+    "airline": "TAP Air Portugal",
+    "stops": 1,
+    "duration_hours": 10.0,
+    "base_fare_usd": 612.0
+  },
+  {
+    "id": "F-JFK-OPO-2",
+    "origin": "JFK",
+    "destination": "OPO",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 7.0,
+    "base_fare_usd": 1074.0
+  },
+  {
+    "id": "F-JFK-SVQ-1",
+    "origin": "JFK",
+    "destination": "SVQ",
+    "airline": "Iberia",
+    "stops": 1,
+    "duration_hours": 11.5,
+    "base_fare_usd": 697.0
+  },
+  {
+    "id": "F-JFK-SVQ-2",
+    "origin": "JFK",
+    "destination": "SVQ",
+    "airline": "Iberia",
+    "stops": 0,
+    "duration_hours": 8.5,
+    "base_fare_usd": 1229.0
+  },
+  {
+    "id": "F-JFK-FNC-1",
+    "origin": "JFK",
+    "destination": "FNC",
+    "airline": "TAP Air Portugal",
+    "stops": 1,
+    "duration_hours": 11.0,
+    "base_fare_usd": 728.0
+  },
+  {
+    "id": "F-JFK-FNC-2",
+    "origin": "JFK",
+    "destination": "FNC",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 8.5,
+    "base_fare_usd": 1297.0
+  },
+  {
+    "id": "F-JFK-RAK-1",
+    "origin": "JFK",
+    "destination": "RAK",
+    "airline": "Royal Air Maroc",
+    "stops": 1,
+    "duration_hours": 11.5,
+    "base_fare_usd": 681.0
+  },
+  {
+    "id": "F-JFK-RAK-2",
+    "origin": "JFK",
+    "destination": "RAK",
+    "airline": "Royal Air Maroc",
+    "stops": 0,
+    "duration_hours": 8.5,
+    "base_fare_usd": 1152.0
+  },
+  {
+    "id": "F-JFK-HND-1",
+    "origin": "JFK",
+    "destination": "HND",
+    "airline": "ANA",
+    "stops": 1,
+    "duration_hours": 21.0,
+    "base_fare_usd": 1046.0
+  },
+  {
+    "id": "F-JFK-HND-2",
+    "origin": "JFK",
+    "destination": "HND",
+    "airline": "Japan Airlines",
+    "stops": 0,
+    "duration_hours": 14.0,
+    "base_fare_usd": 1893.0
+  },
+  {
+    "id": "F-SFO-CUN-1",
+    "origin": "SFO",
+    "destination": "CUN",
+    "airline": "Frontier",
+    "stops": 1,
+    "duration_hours": 6.5,
+    "base_fare_usd": 412.0
+  },
+  {
+    "id": "F-SFO-CUN-2",
+    "origin": "SFO",
+    "destination": "CUN",
+    "airline": "Alaska Airlines",
+    "stops": 0,
+    "duration_hours": 4.9,
+    "base_fare_usd": 790.0
+  },
+  {
+    "id": "F-SFO-PUJ-1",
+    "origin": "SFO",
+    "destination": "PUJ",
+    "airline": "Spirit",
+    "stops": 1,
+    "duration_hours": 7.5,
+    "base_fare_usd": 445.0
+  },
+  {
+    "id": "F-SFO-PUJ-2",
+    "origin": "SFO",
+    "destination": "PUJ",
+    "airline": "United",
+    "stops": 0,
+    "duration_hours": 5.8,
+    "base_fare_usd": 860.0
+  },
+  {
+    "id": "F-SFO-SJU-1",
+    "origin": "SFO",
+    "destination": "SJU",
+    "airline": "JetBlue",
+    "stops": 1,
+    "duration_hours": 8.0,
+    "base_fare_usd": 470.0
+  },
+  {
+    "id": "F-SFO-SJU-2",
+    "origin": "SFO",
+    "destination": "SJU",
+    "airline": "American",
+    "stops": 0,
+    "duration_hours": 5.6,
+    "base_fare_usd": 880.0
+  },
+  {
+    "id": "F-SFO-MBJ-1",
+    "origin": "SFO",
+    "destination": "MBJ",
+    "airline": "Air Canada",
+    "stops": 1,
+    "duration_hours": 8.5,
+    "base_fare_usd": 455.0
+  },
+  {
+    "id": "F-SFO-MBJ-2",
+    "origin": "SFO",
+    "destination": "MBJ",
+    "airline": "Alaska Airlines",
+    "stops": 0,
+    "duration_hours": 5.3,
+    "base_fare_usd": 830.0
+  },
+  {
+    "id": "F-SFO-MCO-1",
+    "origin": "SFO",
+    "destination": "MCO",
+    "airline": "Southwest",
+    "stops": 1,
+    "duration_hours": 7.0,
+    "base_fare_usd": 360.0
+  },
+  {
+    "id": "F-SFO-MCO-2",
+    "origin": "SFO",
+    "destination": "MCO",
+    "airline": "JetBlue",
+    "stops": 0,
+    "duration_hours": 5.5,
+    "base_fare_usd": 620.0
+  },
+  {
+    "id": "F-SFO-SAN-1",
+    "origin": "SFO",
+    "destination": "SAN",
+    "airline": "Alaska Airlines",
+    "stops": 1,
+    "duration_hours": 3.5,
+    "base_fare_usd": 210.0
+  },
+  {
+    "id": "F-SFO-SAN-2",
+    "origin": "SFO",
+    "destination": "SAN",
+    "airline": "United",
+    "stops": 0,
+    "duration_hours": 1.4,
+    "base_fare_usd": 320.0
+  },
+  {
+    "id": "F-SFO-BCN-1",
+    "origin": "SFO",
+    "destination": "BCN",
+    "airline": "Air Europa",
+    "stops": 1,
+    "duration_hours": 13.5,
+    "base_fare_usd": 780.0
+  },
+  {
+    "id": "F-SFO-BCN-2",
+    "origin": "SFO",
+    "destination": "BCN",
+    "airline": "United",
+    "stops": 0,
+    "duration_hours": 11.2,
+    "base_fare_usd": 1490.0
+  },
+  {
+    "id": "F-SFO-FCO-1",
+    "origin": "SFO",
+    "destination": "FCO",
+    "airline": "ITA Airways",
+    "stops": 1,
+    "duration_hours": 14.0,
+    "base_fare_usd": 740.0
+  },
+  {
+    "id": "F-SFO-FCO-2",
+    "origin": "SFO",
+    "destination": "FCO",
+    "airline": "United",
+    "stops": 0,
+    "duration_hours": 11.0,
+    "base_fare_usd": 1420.0
+  },
+  {
+    "id": "F-SFO-LYS-1",
+    "origin": "SFO",
+    "destination": "LYS",
+    "airline": "Air France",
+    "stops": 1,
+    "duration_hours": 14.5,
+    "base_fare_usd": 820.0
+  },
+  {
+    "id": "F-SFO-LYS-2",
+    "origin": "SFO",
+    "destination": "LYS",
+    "airline": "Air France",
+    "stops": 0,
+    "duration_hours": 11.8,
+    "base_fare_usd": 1550.0
+  },
+  {
+    "id": "F-SFO-JTR-1",
+    "origin": "SFO",
+    "destination": "JTR",
+    "airline": "Aegean",
+    "stops": 1,
+    "duration_hours": 17.0,
+    "base_fare_usd": 910.0
+  },
+  {
+    "id": "F-SFO-JTR-2",
+    "origin": "SFO",
+    "destination": "JTR",
+    "airline": "United",
+    "stops": 0,
+    "duration_hours": 13.5,
+    "base_fare_usd": 1680.0
+  },
+  {
+    "id": "F-SFO-DBV-1",
+    "origin": "SFO",
+    "destination": "DBV",
+    "airline": "Croatia Airlines",
+    "stops": 1,
+    "duration_hours": 17.5,
+    "base_fare_usd": 960.0
+  },
+  {
+    "id": "F-SFO-DBV-2",
+    "origin": "SFO",
+    "destination": "DBV",
+    "airline": "Lufthansa",
+    "stops": 0,
+    "duration_hours": 13.8,
+    "base_fare_usd": 1720.0
+  },
+  {
+    "id": "F-SFO-TIV-1",
+    "origin": "SFO",
+    "destination": "TIV",
+    "airline": "Turkish Airlines",
+    "stops": 1,
+    "duration_hours": 18.0,
+    "base_fare_usd": 980.0
+  },
+  {
+    "id": "F-SFO-TIV-2",
+    "origin": "SFO",
+    "destination": "TIV",
+    "airline": "Lufthansa",
+    "stops": 0,
+    "duration_hours": 14.2,
+    "base_fare_usd": 1690.0
+  },
+  {
+    "id": "F-SFO-OPO-1",
+    "origin": "SFO",
+    "destination": "OPO",
+    "airline": "TAP Air Portugal",
+    "stops": 1,
+    "duration_hours": 13.0,
+    "base_fare_usd": 760.0
+  },
+  {
+    "id": "F-SFO-OPO-2",
+    "origin": "SFO",
+    "destination": "OPO",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 11.5,
+    "base_fare_usd": 1380.0
+  },
+  {
+    "id": "F-SFO-SVQ-1",
+    "origin": "SFO",
+    "destination": "SVQ",
+    "airline": "Iberia",
+    "stops": 1,
+    "duration_hours": 14.0,
+    "base_fare_usd": 800.0
+  },
+  {
+    "id": "F-SFO-SVQ-2",
+    "origin": "SFO",
+    "destination": "SVQ",
+    "airline": "Iberia",
+    "stops": 0,
+    "duration_hours": 12.5,
+    "base_fare_usd": 1460.0
+  },
+  {
+    "id": "F-SFO-FNC-1",
+    "origin": "SFO",
+    "destination": "FNC",
+    "airline": "TAP Air Portugal",
+    "stops": 1,
+    "duration_hours": 14.5,
+    "base_fare_usd": 830.0
+  },
+  {
+    "id": "F-SFO-FNC-2",
+    "origin": "SFO",
+    "destination": "FNC",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 12.8,
+    "base_fare_usd": 1520.0
+  },
+  {
+    "id": "F-SFO-RAK-1",
+    "origin": "SFO",
+    "destination": "RAK",
+    "airline": "Royal Air Maroc",
+    "stops": 1,
+    "duration_hours": 15.0,
+    "base_fare_usd": 880.0
+  },
+  {
+    "id": "F-SFO-RAK-2",
+    "origin": "SFO",
+    "destination": "RAK",
+    "airline": "Royal Air Maroc",
+    "stops": 0,
+    "duration_hours": 13.0,
+    "base_fare_usd": 1390.0
+  },
+  {
+    "id": "F-SFO-HND-1",
+    "origin": "SFO",
+    "destination": "HND",
+    "airline": "Korean Air",
+    "stops": 1,
+    "duration_hours": 16.0,
+    "base_fare_usd": 890.0
+  },
+  {
+    "id": "F-SFO-HND-2",
+    "origin": "SFO",
+    "destination": "HND",
+    "airline": "ANA",
+    "stops": 0,
+    "duration_hours": 11.2,
+    "base_fare_usd": 1290.0
+  },
+  {
+    "id": "F-LIS-CUN-1",
+    "origin": "LIS",
+    "destination": "CUN",
+    "airline": "Iberia",
+    "stops": 1,
+    "duration_hours": 14.5,
+    "base_fare_usd": 1080.0
+  },
+  {
+    "id": "F-LIS-CUN-2",
+    "origin": "LIS",
+    "destination": "CUN",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 9.5,
+    "base_fare_usd": 1490.0
+  },
+  {
+    "id": "F-LIS-PUJ-1",
+    "origin": "LIS",
+    "destination": "PUJ",
+    "airline": "Air Europa",
+    "stops": 1,
+    "duration_hours": 12.5,
+    "base_fare_usd": 1040.0
+  },
+  {
+    "id": "F-LIS-PUJ-2",
+    "origin": "LIS",
+    "destination": "PUJ",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 8.5,
+    "base_fare_usd": 1320.0
+  },
+  {
+    "id": "F-LIS-SJU-1",
+    "origin": "LIS",
+    "destination": "SJU",
+    "airline": "Iberia",
+    "stops": 1,
+    "duration_hours": 11.0,
+    "base_fare_usd": 910.0
+  },
+  {
+    "id": "F-LIS-SJU-2",
+    "origin": "LIS",
+    "destination": "SJU",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 7.5,
+    "base_fare_usd": 1180.0
+  },
+  {
+    "id": "F-LIS-MBJ-1",
+    "origin": "LIS",
+    "destination": "MBJ",
+    "airline": "Air Europa",
+    "stops": 1,
+    "duration_hours": 13.0,
+    "base_fare_usd": 1020.0
+  },
+  {
+    "id": "F-LIS-MBJ-2",
+    "origin": "LIS",
+    "destination": "MBJ",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 9.0,
+    "base_fare_usd": 1290.0
+  },
+  {
+    "id": "F-LIS-MCO-1",
+    "origin": "LIS",
+    "destination": "MCO",
+    "airline": "Delta",
+    "stops": 1,
+    "duration_hours": 12.0,
+    "base_fare_usd": 780.0
+  },
+  {
+    "id": "F-LIS-MCO-2",
+    "origin": "LIS",
+    "destination": "MCO",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 8.5,
+    "base_fare_usd": 1050.0
+  },
+  {
+    "id": "F-LIS-SAN-1",
+    "origin": "LIS",
+    "destination": "SAN",
+    "airline": "United",
+    "stops": 1,
+    "duration_hours": 14.0,
+    "base_fare_usd": 960.0
+  },
+  {
+    "id": "F-LIS-SAN-2",
+    "origin": "LIS",
+    "destination": "SAN",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 11.0,
+    "base_fare_usd": 1340.0
+  },
+  {
+    "id": "F-LIS-BCN-1",
+    "origin": "LIS",
+    "destination": "BCN",
+    "airline": "Ryanair",
+    "stops": 0,
+    "duration_hours": 2.5,
+    "base_fare_usd": 210.0
+  },
+  {
+    "id": "F-LIS-BCN-2",
+    "origin": "LIS",
+    "destination": "BCN",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 2.5,
+    "base_fare_usd": 380.0
+  },
+  {
+    "id": "F-LIS-FCO-1",
+    "origin": "LIS",
+    "destination": "FCO",
+    "airline": "Ryanair",
+    "stops": 0,
+    "duration_hours": 2.75,
+    "base_fare_usd": 260.0
+  },
+  {
+    "id": "F-LIS-FCO-2",
+    "origin": "LIS",
+    "destination": "FCO",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 2.75,
+    "base_fare_usd": 420.0
+  },
+  {
+    "id": "F-LIS-LYS-1",
+    "origin": "LIS",
+    "destination": "LYS",
+    "airline": "Air France",
+    "stops": 1,
+    "duration_hours": 5.5,
+    "base_fare_usd": 340.0
+  },
+  {
+    "id": "F-LIS-LYS-2",
+    "origin": "LIS",
+    "destination": "LYS",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 2.5,
+    "base_fare_usd": 460.0
+  },
+  {
+    "id": "F-LIS-JTR-1",
+    "origin": "LIS",
+    "destination": "JTR",
+    "airline": "Aegean Airlines",
+    "stops": 1,
+    "duration_hours": 5.0,
+    "base_fare_usd": 360.0
+  },
+  {
+    "id": "F-LIS-JTR-2",
+    "origin": "LIS",
+    "destination": "JTR",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 4.5,
+    "base_fare_usd": 580.0
+  },
+  {
+    "id": "F-LIS-DBV-1",
+    "origin": "LIS",
+    "destination": "DBV",
+    "airline": "Croatia Airlines",
+    "stops": 1,
+    "duration_hours": 4.5,
+    "base_fare_usd": 390.0
+  },
+  {
+    "id": "F-LIS-DBV-2",
+    "origin": "LIS",
+    "destination": "DBV",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 3.0,
+    "base_fare_usd": 510.0
+  },
+  {
+    "id": "F-LIS-TIV-1",
+    "origin": "LIS",
+    "destination": "TIV",
+    "airline": "Turkish Airlines",
+    "stops": 1,
+    "duration_hours": 5.0,
+    "base_fare_usd": 420.0
+  },
+  {
+    "id": "F-LIS-TIV-2",
+    "origin": "LIS",
+    "destination": "TIV",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 3.5,
+    "base_fare_usd": 560.0
+  },
+  {
+    "id": "F-LIS-OPO-1",
+    "origin": "LIS",
+    "destination": "OPO",
+    "airline": "Ryanair",
+    "stops": 0,
+    "duration_hours": 1.0,
+    "base_fare_usd": 130.0
+  },
+  {
+    "id": "F-LIS-OPO-2",
+    "origin": "LIS",
+    "destination": "OPO",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 1.0,
+    "base_fare_usd": 210.0
+  },
+  {
+    "id": "F-LIS-SVQ-1",
+    "origin": "LIS",
+    "destination": "SVQ",
+    "airline": "Iberia",
+    "stops": 1,
+    "duration_hours": 4.0,
+    "base_fare_usd": 290.0
+  },
+  {
+    "id": "F-LIS-SVQ-2",
+    "origin": "LIS",
+    "destination": "SVQ",
+    "airline": "Vueling",
+    "stops": 0,
+    "duration_hours": 1.5,
+    "base_fare_usd": 340.0
+  },
+  {
+    "id": "F-LIS-FNC-1",
+    "origin": "LIS",
+    "destination": "FNC",
+    "airline": "Binter Canarias",
+    "stops": 1,
+    "duration_hours": 4.5,
+    "base_fare_usd": 380.0
+  },
+  {
+    "id": "F-LIS-FNC-2",
+    "origin": "LIS",
+    "destination": "FNC",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 2.5,
+    "base_fare_usd": 520.0
+  },
+  {
+    "id": "F-LIS-RAK-1",
+    "origin": "LIS",
+    "destination": "RAK",
+    "airline": "Royal Air Maroc",
+    "stops": 1,
+    "duration_hours": 5.0,
+    "base_fare_usd": 350.0
+  },
+  {
+    "id": "F-LIS-RAK-2",
+    "origin": "LIS",
+    "destination": "RAK",
+    "airline": "TAP Air Portugal",
+    "stops": 0,
+    "duration_hours": 3.0,
+    "base_fare_usd": 470.0
+  },
+  {
+    "id": "F-LIS-HND-1",
+    "origin": "LIS",
+    "destination": "HND",
+    "airline": "Qatar Airways",
+    "stops": 1,
+    "duration_hours": 19.0,
+    "base_fare_usd": 1450.0
+  },
+  {
+    "id": "F-LIS-HND-2",
+    "origin": "LIS",
+    "destination": "HND",
+    "airline": "ANA",
+    "stops": 0,
+    "duration_hours": 16.0,
+    "base_fare_usd": 2050.0
+  }
+]

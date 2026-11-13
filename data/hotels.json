@@ -1,0 +1,895 @@
+[
+  {
+    "id": "H-CUN-1",
+    "city": "CUN",
+    "name": "Caribe Family Pines Resort",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 389.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-CUN-2",
+    "city": "CUN",
+    "name": "Hotel Zona Hotelera Central",
+    "style": "chain",
+    "stars": 3,
+    "base_nightly_usd": 210.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-CUN-3",
+    "city": "CUN",
+    "name": "Casa Laguna Boutique",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 295.0,
+    "sleeps": 2,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-CUN-4",
+    "city": "CUN",
+    "name": "Sol Budget Inn Cancun",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 88.0,
+    "sleeps": 3,
+    "amenities": [
+      "pool"
+    ]
+  },
+  {
+    "id": "H-PUJ-1",
+    "city": "PUJ",
+    "name": "Bavaro Sands Family Resort",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 340.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "kids_club",
+      "spa",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-PUJ-2",
+    "city": "PUJ",
+    "name": "Coral Breeze Chain Hotel",
+    "style": "chain",
+    "stars": 3,
+    "base_nightly_usd": 195.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-PUJ-3",
+    "city": "PUJ",
+    "name": "Palma Real Adults Retreat",
+    "style": "resort",
+    "stars": 5,
+    "base_nightly_usd": 520.0,
+    "sleeps": 2,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "spa",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-PUJ-4",
+    "city": "PUJ",
+    "name": "Playa Sencilla Guesthouse",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 72.0,
+    "sleeps": 3,
+    "amenities": [
+      "pool"
+    ]
+  },
+  {
+    "id": "H-SJU-1",
+    "city": "SJU",
+    "name": "Condado Family Suites",
+    "style": "chain",
+    "stars": 4,
+    "base_nightly_usd": 305.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-SJU-2",
+    "city": "SJU",
+    "name": "Old San Juan Casa Colonial",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 260.0,
+    "sleeps": 2,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-SJU-3",
+    "city": "SJU",
+    "name": "Isla Verde Oceanfront Resort",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 365.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "spa",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-SJU-4",
+    "city": "SJU",
+    "name": "Miramar Budget Lodge",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 96.0,
+    "sleeps": 2,
+    "amenities": [
+      "pool"
+    ]
+  },
+  {
+    "id": "H-MBJ-1",
+    "city": "MBJ",
+    "name": "Ocho Rios Family Beach Resort",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 330.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-MBJ-2",
+    "city": "MBJ",
+    "name": "Doctor's Cave Chain Inn",
+    "style": "chain",
+    "stars": 3,
+    "base_nightly_usd": 165.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-MBJ-3",
+    "city": "MBJ",
+    "name": "Rose Hall Luxury Escape",
+    "style": "resort",
+    "stars": 5,
+    "base_nightly_usd": 610.0,
+    "sleeps": 2,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "spa",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-MBJ-4",
+    "city": "MBJ",
+    "name": "Hillside Hostel Hut",
+    "style": "budget",
+    "stars": 1,
+    "base_nightly_usd": 54.0,
+    "sleeps": 2,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-MCO-1",
+    "city": "MCO",
+    "name": "Magic Kingdom Family Resort",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 279.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-MCO-2",
+    "city": "MCO",
+    "name": "International Drive Chain Suites",
+    "style": "chain",
+    "stars": 3,
+    "base_nightly_usd": 149.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-MCO-3",
+    "city": "MCO",
+    "name": "Winter Park Garden Boutique",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 235.0,
+    "sleeps": 2,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-MCO-4",
+    "city": "MCO",
+    "name": "Kissimmee Budget Motor Lodge",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 68.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool"
+    ]
+  },
+  {
+    "id": "H-SAN-1",
+    "city": "SAN",
+    "name": "Mission Bay Family Resort",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 349.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-SAN-2",
+    "city": "SAN",
+    "name": "Gaslamp Chain Hotel",
+    "style": "chain",
+    "stars": 3,
+    "base_nightly_usd": 198.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-SAN-3",
+    "city": "SAN",
+    "name": "La Jolla Cliffside Retreat",
+    "style": "resort",
+    "stars": 5,
+    "base_nightly_usd": 620.0,
+    "sleeps": 2,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "spa",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-SAN-4",
+    "city": "SAN",
+    "name": "Point Loma Surf Hostel",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 84.0,
+    "sleeps": 3,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-BCN-1",
+    "city": "BCN",
+    "name": "Eixample Family Chain Hotel",
+    "style": "chain",
+    "stars": 4,
+    "base_nightly_usd": 310.0,
+    "sleeps": 5,
+    "amenities": [
+      "pool",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-BCN-2",
+    "city": "BCN",
+    "name": "Gothic Quarter Boutique Casa",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 245.0,
+    "sleeps": 2,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-BCN-3",
+    "city": "BCN",
+    "name": "Barceloneta Beachfront Hotel",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 395.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "spa",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-BCN-4",
+    "city": "BCN",
+    "name": "Sants Budget Rooms",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 89.0,
+    "sleeps": 3,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-FCO-1",
+    "city": "FCO",
+    "name": "Trastevere Chain Hotel",
+    "style": "chain",
+    "stars": 4,
+    "base_nightly_usd": 275.0,
+    "sleeps": 4,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-FCO-2",
+    "city": "FCO",
+    "name": "Monti Boutique Palazzo",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 239.0,
+    "sleeps": 2,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-FCO-3",
+    "city": "FCO",
+    "name": "Villa Aurelia Family Resort",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 360.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "kids_club",
+      "spa",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-FCO-4",
+    "city": "FCO",
+    "name": "Termini Budget Stay",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 92.0,
+    "sleeps": 3,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-LYS-1",
+    "city": "LYS",
+    "name": "Confluence Chain Hotel",
+    "style": "chain",
+    "stars": 4,
+    "base_nightly_usd": 215.0,
+    "sleeps": 4,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-LYS-2",
+    "city": "LYS",
+    "name": "Croix-Rousse Boutique Maison",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 188.0,
+    "sleeps": 2,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-LYS-3",
+    "city": "LYS",
+    "name": "Parc Tete d'Or Family Hotel",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 260.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-LYS-4",
+    "city": "LYS",
+    "name": "Part-Dieu Budget Hostel",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 65.0,
+    "sleeps": 4,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-JTR-1",
+    "city": "JTR",
+    "name": "Oia Cliffside Family Resort",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 420.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "kids_club",
+      "spa",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-JTR-2",
+    "city": "JTR",
+    "name": "Fira Chain Hotel",
+    "style": "chain",
+    "stars": 3,
+    "base_nightly_usd": 205.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-JTR-3",
+    "city": "JTR",
+    "name": "Caldera Whitewash Boutique",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 275.0,
+    "sleeps": 2,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-JTR-4",
+    "city": "JTR",
+    "name": "Perissa Beach Budget Rooms",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 79.0,
+    "sleeps": 3,
+    "amenities": [
+      "beach_access"
+    ]
+  },
+  {
+    "id": "H-DBV-1",
+    "city": "DBV",
+    "name": "Lapad Family Seaside Resort",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 330.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-DBV-2",
+    "city": "DBV",
+    "name": "Stradun Chain Hotel",
+    "style": "chain",
+    "stars": 3,
+    "base_nightly_usd": 210.0,
+    "sleeps": 4,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-DBV-3",
+    "city": "DBV",
+    "name": "Old Town Boutique Loggia",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 265.0,
+    "sleeps": 2,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-DBV-4",
+    "city": "DBV",
+    "name": "Ploce Budget Pension",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 85.0,
+    "sleeps": 3,
+    "amenities": [
+      "beach_access"
+    ]
+  },
+  {
+    "id": "H-TIV-1",
+    "city": "TIV",
+    "name": "Bay of Kotor Family Resort",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 245.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-TIV-2",
+    "city": "TIV",
+    "name": "Tivat Marina Chain Hotel",
+    "style": "chain",
+    "stars": 3,
+    "base_nightly_usd": 160.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-TIV-3",
+    "city": "TIV",
+    "name": "Stari Grad Boutique Palazzetto",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 229.0,
+    "sleeps": 2,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-TIV-4",
+    "city": "TIV",
+    "name": "Perast Budget Guesthouse",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 58.0,
+    "sleeps": 3,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-OPO-1",
+    "city": "OPO",
+    "name": "Foz Family Beach Hotel",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 255.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "beach_access",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-OPO-2",
+    "city": "OPO",
+    "name": "Baixa Chain Hotel",
+    "style": "chain",
+    "stars": 4,
+    "base_nightly_usd": 198.0,
+    "sleeps": 4,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-OPO-3",
+    "city": "OPO",
+    "name": "Ribeira Riverside Boutique",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 215.0,
+    "sleeps": 2,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-OPO-4",
+    "city": "OPO",
+    "name": "Bolhao Budget House",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 70.0,
+    "sleeps": 3,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-SVQ-1",
+    "city": "SVQ",
+    "name": "Santa Cruz Family Hotel",
+    "style": "chain",
+    "stars": 4,
+    "base_nightly_usd": 235.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-SVQ-2",
+    "city": "SVQ",
+    "name": "Triana Boutique Patio",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 179.0,
+    "sleeps": 2,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-SVQ-3",
+    "city": "SVQ",
+    "name": "Alcazar Gardens Hotel",
+    "style": "resort",
+    "stars": 5,
+    "base_nightly_usd": 390.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "spa",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-SVQ-4",
+    "city": "SVQ",
+    "name": "Macarena Budget Pension",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 62.0,
+    "sleeps": 3,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-FNC-1",
+    "city": "FNC",
+    "name": "Lido Family Resort Madeira",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 275.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "kids_club",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-FNC-2",
+    "city": "FNC",
+    "name": "Funchal Chain Hotel",
+    "style": "chain",
+    "stars": 3,
+    "base_nightly_usd": 165.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-FNC-3",
+    "city": "FNC",
+    "name": "Quinta Terrace Boutique",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 239.0,
+    "sleeps": 2,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-FNC-4",
+    "city": "FNC",
+    "name": "Levada Budget Rooms",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 75.0,
+    "sleeps": 3,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-RAK-1",
+    "city": "RAK",
+    "name": "Palmeraie Family Riad Resort",
+    "style": "resort",
+    "stars": 5,
+    "base_nightly_usd": 310.0,
+    "sleeps": 6,
+    "amenities": [
+      "pool",
+      "kids_club",
+      "spa",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-RAK-2",
+    "city": "RAK",
+    "name": "Gueliz Chain Hotel",
+    "style": "chain",
+    "stars": 4,
+    "base_nightly_usd": 165.0,
+    "sleeps": 4,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-RAK-3",
+    "city": "RAK",
+    "name": "Medina Riad Boutique",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 220.0,
+    "sleeps": 2,
+    "amenities": [
+      "pool",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-RAK-4",
+    "city": "RAK",
+    "name": "Bab Doukkala Budget Riad",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 46.0,
+    "sleeps": 3,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-HND-1",
+    "city": "HND",
+    "name": "Shinjuku Chain Hotel",
+    "style": "chain",
+    "stars": 4,
+    "base_nightly_usd": 245.0,
+    "sleeps": 3,
+    "amenities": [
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-HND-2",
+    "city": "HND",
+    "name": "Yanaka Boutique Ryokan",
+    "style": "boutique",
+    "stars": 4,
+    "base_nightly_usd": 410.0,
+    "sleeps": 2,
+    "amenities": [
+      "restaurant",
+      "spa"
+    ]
+  },
+  {
+    "id": "H-HND-3",
+    "city": "HND",
+    "name": "Odaiba Family Resort Tower",
+    "style": "resort",
+    "stars": 4,
+    "base_nightly_usd": 330.0,
+    "sleeps": 5,
+    "amenities": [
+      "kids_club",
+      "spa",
+      "restaurant"
+    ]
+  },
+  {
+    "id": "H-HND-4",
+    "city": "HND",
+    "name": "Asakusa Budget Capsule",
+    "style": "budget",
+    "stars": 2,
+    "base_nightly_usd": 58.0,
+    "sleeps": 2,
+    "amenities": [
+      "restaurant"
+    ]
+  }
+]

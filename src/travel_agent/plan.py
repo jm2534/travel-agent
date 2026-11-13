@@ -128,8 +128,18 @@ def quote_trip(ctx: RunContext[PlannerDeps], proposal: Proposal) -> tools.TripQu
 def enforce_constraints(
     ctx: RunContext[PlannerDeps], output: Proposal | NoFeasiblePlan
 ) -> Proposal | NoFeasiblePlan:
-    """Business rules live here, not in the prompt; a violation goes back to the model to retry."""
+    """Business rules live here, not in the prompt; a violation goes back to the model to retry.
+
+    Giving up is checked too: a NoFeasiblePlan whose closest option breaks nothing is sent back,
+    so the model can't declare a feasible request infeasible.
+    """
     if isinstance(output, NoFeasiblePlan):
+        closest = output.closest
+        if closest is not None and not check_proposal(ctx.deps.catalog, ctx.deps.brief, closest):
+            raise ModelRetry(
+                "NoFeasiblePlan rejected: your closest option satisfies every hard constraint. "
+                "Return it as a Proposal."
+            )
         return output
     violations = check_proposal(ctx.deps.catalog, ctx.deps.brief, output)
     if violations:

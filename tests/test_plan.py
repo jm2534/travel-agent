@@ -130,6 +130,19 @@ def test_planner_infeasible_is_priced_by_code(catalog):
     assert result.reason == "Too pricey."
 
 
+def test_giving_up_on_a_valid_option_is_retried(catalog):
+    """R5: giving up on a closest option that breaks nothing is retried, not shown as Infeasible."""
+    brief = make_brief(budget=Budget(amount_usd=3000, scope="total", hard=True))
+    script = ScriptedPlanner(
+        ("NoFeasiblePlan", {"closest": VALID, "reason": "Gave up."}), ("Proposal", VALID)
+    )
+
+    result = run(catalog, brief, script)
+
+    assert isinstance(result, TripSuggestion)
+    assert script.saw_retry_mentioning("satisfies every hard constraint")
+
+
 def test_no_data_at_all_is_infeasible_without_closest(catalog):
     """R5: nothing matched -> Infeasible with no closest option, never a hallucinated plan."""
     script = ScriptedPlanner(("NoFeasiblePlan", {"closest": None, "reason": "No data."}))

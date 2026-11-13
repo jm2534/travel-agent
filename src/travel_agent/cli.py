@@ -4,6 +4,7 @@ With no request, pick one of the examples.
 """
 
 import argparse
+import re
 import sys
 from datetime import date
 
@@ -31,14 +32,35 @@ EXAMPLE_REQUESTS = [
 EXIT_OK, EXIT_AGENT_ERROR, EXIT_CONFIG = 0, 1, 2
 
 
+def airport_code(value: str) -> str:
+    """argparse type for --from: a 3-letter IATA code, case-insensitive ("jfk" -> "JFK")."""
+    code = value.strip().upper()
+    if not re.fullmatch(r"[A-Z]{3}", code):
+        raise argparse.ArgumentTypeError(f"expected a 3-letter airport code, got {value!r}")
+    return code
+
+
 def _pick_example() -> str:
+    """List the example requests and ask until the user picks a valid number."""
     for i, example in enumerate(EXAMPLE_REQUESTS, 1):
         print(f"  {i}. {example}")
-    choice = input(f"Pick 1-{len(EXAMPLE_REQUESTS)}: ").strip()
-    return EXAMPLE_REQUESTS[int(choice) - 1]
+    while True:
+        choice = input(f"Pick 1-{len(EXAMPLE_REQUESTS)}: ").strip()
+        if choice.isdigit() and 1 <= int(choice) <= len(EXAMPLE_REQUESTS):
+            return EXAMPLE_REQUESTS[int(choice) - 1]
+        print(f"Please enter a number from 1 to {len(EXAMPLE_REQUESTS)}.")
 
 
 def main(argv: list[str] | None = None) -> int:
+    """Run the CLI.
+
+    Args:
+        argv: Arguments (defaults to sys.argv[1:]).
+
+    Returns:
+        Exit code: 0 for any answer (including clarification or infeasible), 1 for a model or
+        API failure, 2 for missing or rejected credentials.
+    """
     parser = argparse.ArgumentParser(
         prog="travel-agent", description="Single-turn trip idea agent."
     )
@@ -49,6 +71,7 @@ def main(argv: list[str] | None = None) -> int:
         "--from",
         dest="device_origin",
         metavar="IATA",
+        type=airport_code,
         help="Device location fallback, used only if the request names no origin.",
     )
     parser.add_argument(

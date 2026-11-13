@@ -213,3 +213,12 @@ def test_unresolvable_timeframe_degrades_with_caveat(timeframe, expected_depart)
 
     assert brief.depart_date == expected_depart
     assert CaveatKind.DATES_ASSUMED in caveat_kinds(brief)
+
+
+def test_same_day_range_is_not_a_year_long_trip():
+    """R2: start == end ("Dec 1-1") is not a span; nights fall back to the default, not 365."""
+    timeframe = Timeframe(start=MonthDay(month=12, day=1), end=MonthDay(month=12, day=1))
+    brief = plan(TripConstraints(destination="Tokyo", timeframe=timeframe))
+
+    assert brief.nights == 5
+    assert "nights" in assumed_fields(brief)

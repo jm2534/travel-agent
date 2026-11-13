@@ -96,9 +96,11 @@ class ResolvedDates:
             return None
         depart = explicit[0]
         end = ResolvedDates._as_date(timeframe.end, depart.year)
-        if end is not None and end <= depart:
+        if end is not None and end < depart:
             end = ResolvedDates._as_date(timeframe.end, depart.year + 1)  # range crosses New Year
-        return (end - depart).days if end is not None else None
+        if end is None or end == depart:
+            return None  # a same-day "range" says nothing about length
+        return (end - depart).days
 
     @staticmethod
     def _fallback_month(timeframe: Timeframe | None) -> int | None:

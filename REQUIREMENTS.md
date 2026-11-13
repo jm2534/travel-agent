@@ -17,7 +17,7 @@ An LLM extracts `TripConstraints` from the request: origin (IATA), destination o
 - Handled by: LLM (schema validated by code)
 - Examples: "Tokyo for 8 days in November, two adults, $6k budget excluding flights" → destination=Tokyo, nights≈8, adults=2, budget 6000 excluding flights, origin=None
 - On failure: schema-invalid output is retried by pydantic-ai, then the run returns an `AgentError` result (no crash, no traceback).
-- Status: todo
+- Status: done
 - Code: src/travel_agent/extract.py, models.py (TripConstraints)
 
 ### R2: Date resolution against Today (MUST)
@@ -87,7 +87,7 @@ Models are set per stage with pydantic-ai model strings: `TRAVEL_AGENT_EXTRACTIO
   All scoring is deterministic (no LLM-as-judge). It writes `evals/report.md` with one table per stage. The gate (R3) is covered by unit tests, not the eval.
 - Handled by: code
 - On failure: a case that errors scores 0 and is reported; the run continues.
-- Status: tested
+- Status: done
 - Code: src/travel_agent/eval_harness.py, evals/
 
 ### R10: README / PROCESS (MUST)

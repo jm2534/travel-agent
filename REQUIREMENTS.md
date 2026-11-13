@@ -1,7 +1,7 @@
 # Trip Idea Agent
 
 ## Summary
-A single-turn CLI agent: one natural-language travel request in, one typed response out. That response is either a `TripSuggestion` (1–3 ranked options, each with destination, flight, hotel, code-computed cost, reasoning, and caveats) or a `ClarificationRequest` (the specific questions that block planning). An LLM turns the request into a `TripConstraints` object. Code decides whether that is enough to plan. A planner agent then calls mock flight, hotel and destination tools, and code enforces the business rules (budget, exclusions, IDs that really exist) by sending `ModelRetry` back to the planner. Success means the bundled eval harness (7 or more cases, at least 2 scored dimensions) passes on the example prompts, including "Cheap." and contradictory or underspecified inputs.
+A single-turn CLI agent: one natural-language travel request in, one typed response out. That response is either a `TripSuggestion` (one option: destination, flight, hotel, code-computed cost, reasoning, and caveats), a `ClarificationRequest` (the specific questions that block planning), or an `Infeasible` (the closest option and the constraint it breaks). An LLM turns the request into a `TripConstraints` object. Code decides whether that is enough to plan. A planner agent then calls mock flight, hotel and destination tools, and code enforces the business rules (budget, exclusions, IDs that really exist) by sending `ModelRetry` back to the planner. Success means the eval harness, which scores the extractor and the planner separately on 9 cases, passes on the example prompts, including "Cheap." and contradictory or underspecified inputs.
 
 ## Terms
 - **TripConstraints**: what the LLM extracted from the request, with nothing invented. Fields it can't find are `None`.
@@ -27,9 +27,9 @@ Code resolves month or season phrases to a concrete future window relative to To
 - Status: todo
 
 ### R3: Sufficiency gate (MUST)
-Code, not the LLM, decides between planning and asking. A critical gap means no destination and no preferences, **and** no timeframe. In that case the response is a `ClarificationRequest` that lists the missing fields and one question for each. Every other gap is soft and gets a stated default.
+Code, not the LLM, decides between planning and asking. A critical gap means no destination and no preferences, **and** no timeframe. In that case the response is a `ClarificationRequest` that lists the missing fields, with one question for each drawn from a code template (no LLM). Every other gap is soft and gets a stated default.
 - Handled by: code
-- Examples: "Cheap." → ClarificationRequest(missing=[destination_or_preferences, timeframe]); missing origin → plan without flights, with caveat `FLIGHTS_NOT_PRICED`; missing travellers → assume 2 adults, recorded as an assumption
+- Examples: "Cheap." → ClarificationRequest(missing=[destination_or_preferences, timeframe]); missing origin and no `--from` → plan without flights, with caveat `FLIGHTS_NOT_PRICED`; missing origin with `--from JFK` → origin=JFK plus caveat `ORIGIN_FROM_DEVICE`; missing travellers → assume 2 adults, recorded as an assumption
 - On failure: n/a (pure function)
 - Status: todo
 
@@ -49,29 +49,34 @@ Each result carries a stable ID. An empty result is a normal return (an empty li
 The planner LLM picks options by **ID only**. An output validator recomputes cost from the mock data and raises `ModelRetry` when any of these hold: an ID is unknown, an excluded destination is chosen, a hard cap is exceeded, or a required hotel amenity is missing. The model never does the arithmetic.
 - Handled by: LLM (choices) + code (validation, pricing)
 - Examples: "under $2000 for two" with the cheapest option at $2400 → retry → eventually `Infeasible`
-- On failure: when retries run out (N=3), the result is `Infeasible` with the cheapest option found and why it failed, never a hallucinated plan.
+- On failure: when retries run out (N=3), code builds `Infeasible` from the last attempt the validator rejected (re-priced, with the violated constraint kinds). The planner may also return `Infeasible` directly when the tools show nothing fits. It must include its closest option's IDs, and code prices them. A constraint is never violated silently.
+- A 4th tool, `quote_trip(flight_id, hotel_id, nights)`, calls the same pricing function as the validator, so the model can check before it commits.
 - Status: todo
 
 ### R6: Typed response (MUST)
-`TripResult = TripSuggestion | ClarificationRequest | Infeasible | AgentError`, all pydantic. TripSuggestion has options[1..3] (destination, reasoning, flight_id?, hotel_id, nights, cost breakdown computed by code), assumptions[], and caveats[]. Each caveat has a `kind` enum and text.
+`TripResult = TripSuggestion | ClarificationRequest | Infeasible | AgentError`, all pydantic. TripSuggestion has a single `option` (destination, reasoning, flight_id?, hotel_id, nights, cost breakdown computed by code), assumptions[], and caveats[]. Each caveat has a `kind` enum and text.
 - Handled by: code
 - Examples: see R3, R5
 - On failure: n/a
 - Status: todo
 
 ### R7: CLI (MUST)
-`uv run travel-agent` shows the example prompts to pick from, or `travel-agent "free text"`. It prints the result as JSON (and a short human summary).
+`uv run travel-agent` (or `python -m travel_agent`) shows the example prompts to pick from, or `travel-agent "free text"`. Optional `--from IATA` simulates a device location (as a browser would provide with permission) and is used only when no origin was extracted. Optional `--today YYYY-MM-DD`. It prints the result as JSON (and a short human summary).
 - Handled by: code
 - On failure: a missing or invalid API key prints a one-line actionable error and exits with code 2. This check runs before any LLM call.
 - Status: todo
 
 ### R8: Configurable provider (MUST)
-The model is set by the `TRAVEL_AGENT_MODEL` env var (a pydantic-ai model string). The key is read from the provider's standard env var through `.env`, which is git-ignored. `.env.example` is committed.
+Models are set per stage with pydantic-ai model strings: `TRAVEL_AGENT_EXTRACTION_MODEL` (default `anthropic:claude-haiku-5-5`) and `TRAVEL_AGENT_PLANNING_MODEL` (default `anthropic:claude-sonnet-5-5`). The key is read from the provider's standard env var through `.env`, which is git-ignored. `.env.example` is committed.
 - Handled by: code
 - Status: todo
 
 ### R9: Eval harness (MUST)
-`uv run travel-agent-eval` runs at least 7 cases (the assignment examples plus contradictory and past-date cases). Each case declares its expected outcome type and checks for that case. Scores cover at least these dimensions: (1) **outcome**: the right result type; (2) **constraint adherence**: budget, exclusions, amenities, and the expected caveat kinds present. It writes a summary table to `evals/report.md`.
+`uv run travel-agent-eval` runs 9 cases: the 7 assignment examples, a contradictory one ($500 5-star Paris week), and a destination with no data. Each case carries:
+  - `expected_constraints`: a partial field match, scoring the **extractor**.
+  - `gold_constraints` + `planner_checks`: the planner runs on gold input, not on the extractor's output, so the two stages fail independently. Dimensions: (1) **outcome type**, (2) **constraint adherence** (budget, exclusions, amenities, origin), (3) **expected caveat kinds** present.
+
+  All scoring is deterministic (no LLM-as-judge). It writes `evals/report.md` with one table per stage. The gate (R3) is covered by unit tests, not the eval.
 - Handled by: code
 - On failure: a case that errors scores 0 and is reported; the run continues.
 - Status: todo
@@ -87,10 +92,13 @@ Setup in under 5 minutes; the decision log; known gaps.
 - Production retries, caching, observability: the assignment says so.
 
 ## Assumptions
-- A1: Default model is Anthropic Claude Haiku, because it is cheap, fast, and reliable at tool calling. (unconfirmed)
-- A2: Mock data is static JSON (about 15 destinations; origins JFK, SFO, LIS). Seasonal pricing is a code multiplier, so data isn't stored per date. (unconfirmed)
+- A2: Mock data is static JSON (15 destinations to start; origins JFK, SFO, LIS), generated once by a committed Haiku script, with Santorini included so the exclusion can be tested. Seasonal pricing is a code multiplier, so data isn't stored per date. (confirmed)
 - A3: Defaults for soft gaps: 2 adults, nights from phrasing (long weekend=3, week=7), else 5. (unconfirmed)
 
 ## Decisions
 - Two LLM stages (extract → code gate → plan) rather than one agent, because the ask-vs-plan decision is a business rule and must be testable without an LLM. Tradeoff: two model calls.
+- Separate models per stage (Haiku extracts, Sonnet plans), because extraction is narrow and high volume while planning is multi-step tool use. Tradeoff: two env vars.
+- Budget = {amount, scope: total|excluding_flights|hotel_per_night, hard}, with 10% tolerance for "~". Soft caps are only reported as caveats.
+- Rules reach the model context in three layers: Field descriptions in the JSON schema, tool docstrings, and short system prompts in `prompts.py`. Constraint values go in the user message. Enforcement lives only in the validator, because prompts are guidance and code is the contract.
+- One option per suggestion, because ranking several plans is overbuilding for now. Tradeoff: no alternatives shown.
 - The model returns IDs and code computes prices, because LLM arithmetic is unreliable and budget is a hard rule. Tradeoff: the schema is less natural for the model.

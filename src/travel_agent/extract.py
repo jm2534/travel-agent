@@ -5,8 +5,12 @@ from pydantic_ai import Agent
 from travel_agent.models import TripConstraints
 from travel_agent.prompts import EXTRACTOR_INSTRUCTIONS
 
+EXTRACTOR_OUTPUT_RETRIES = 2
+
 extractor = Agent(
-    output_type=TripConstraints, instructions=EXTRACTOR_INSTRUCTIONS, retries={"output": 2}
+    output_type=TripConstraints,
+    instructions=EXTRACTOR_INSTRUCTIONS,
+    retries={"output": EXTRACTOR_OUTPUT_RETRIES},
 )
 
 

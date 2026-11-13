@@ -28,7 +28,7 @@ def price_proposal(catalog: Catalog, brief: PlanningBrief, proposal: Proposal) -
     hotel = catalog.hotels[proposal.hotel_id]
     nightly = hotel.nightly_rate(destination, brief.depart_date)
     rooms = hotel.rooms_for(brief.party_size)
-    hotel_usd = round(nightly * rooms * brief.nights, 2)
+    hotel_usd = hotel.stay_total(destination, brief.depart_date, brief.nights, brief.party_size)
 
     flights_usd = None
     if proposal.flight_id is not None:

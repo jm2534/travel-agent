@@ -30,8 +30,9 @@ from travel_agent.models import (
 )
 from travel_agent.plan import plan_trip
 
-CASES_PATH = Path("evals/cases.yaml")
-REPORT_PATH = Path("evals/report.md")
+EVALS_DIR = Path(__file__).resolve().parents[2] / "evals"  # repo root, like catalog.DATA_DIR
+CASES_PATH = EVALS_DIR / "cases.yaml"
+REPORT_PATH = EVALS_DIR / "report.md"
 EVAL_TODAY = date(2026, 11, 12)
 
 
@@ -97,12 +98,10 @@ def score_extraction(case: EvalCase, actual: TripConstraints) -> list[DimensionS
         if not _matches(expected, got):
             mismatches.append(f"{path}={got!r} (want {expected!r})")
     total = len(case.expected_constraints)
-    fields = DimensionScore(
-        dimension="fields",
-        passed=not mismatches,
-        detail=f"{total - len(mismatches)}/{total}"
-        + (f"; {'; '.join(mismatches)}" * bool(mismatches)),
-    )
+    detail = f"{total - len(mismatches)}/{total}"
+    if mismatches:
+        detail += "; " + "; ".join(mismatches)
+    fields = DimensionScore(dimension="fields", passed=not mismatches, detail=detail)
 
     gate_result = assess(actual, case.today, case.device_origin)
     wants_clarification = case.planner_checks.outcome == "clarification"

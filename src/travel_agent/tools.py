@@ -138,7 +138,7 @@ def search_hotels(
             continue
         nightly = hotel.nightly_rate(dest, check_in)
         rooms = hotel.rooms_for(guests)
-        total = round(nightly * rooms * nights, 2)
+        total = hotel.stay_total(dest, check_in, nights, guests)
         quotes.append(HotelQuote(hotel=hotel, nightly_usd=nightly, rooms=rooms, total_usd=total))
     return sorted(quotes, key=lambda q: q.total_usd)
 

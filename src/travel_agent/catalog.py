@@ -85,6 +85,13 @@ class Hotel(BaseModel):
         """Enough rooms for everyone, given the per-room capacity."""
         return math.ceil(guests / self.sleeps)
 
+    def stay_total(
+        self, destination: Destination, check_in: date, nights: int, guests: int
+    ) -> float:
+        """Whole-stay cost for the party: nightly rate x rooms x nights."""
+        nightly = self.nightly_rate(destination, check_in)
+        return round(nightly * self.rooms_for(guests) * nights, 2)
+
 
 class Catalog(BaseModel):
     destinations: dict[DestinationId, Destination]

@@ -76,8 +76,9 @@ The planner LLM picks options by **ID only**. An output validator recomputes cos
 ### R8: Configurable provider (MUST)
 Models are set per stage with pydantic-ai model strings: `TRAVEL_AGENT_EXTRACTION_MODEL` (default `anthropic:claude-haiku-5-5`) and `TRAVEL_AGENT_PLANNING_MODEL` (default `anthropic:claude-sonnet-5-5`). The key is read from the provider's standard env var through `.env`, which is git-ignored. `.env.example` is committed.
 - Handled by: code
-- Status: done
+- Status: tested
 - Code: src/travel_agent/config.py, .env.example
+- Tests: tests/test_config.py
 
 ### R9: Eval harness (MUST)
 `uv run travel-agent-eval` runs 9 cases: the 7 assignment examples, a contradictory one (a 5-star Barcelona week for $800; Paris isn't in the mock data), and a destination with no data (Reykjavik). Each case carries:

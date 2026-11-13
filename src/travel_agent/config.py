@@ -23,6 +23,13 @@ class ConfigError(Exception):
 
 @dataclass(frozen=True)
 class Config:
+    """Model strings for each stage.
+
+    Attributes:
+        extraction_model: pydantic-ai model string for the extractor.
+        planning_model: pydantic-ai model string for the planner.
+    """
+
     extraction_model: str
     planning_model: str
 
@@ -31,6 +38,7 @@ def load_config() -> Config:
     """Read model strings from the environment and check each provider's key is set.
 
     Only presence is checked here; an invalid key surfaces as AgentError(kind="auth") at run time.
+    A provider prefix not in PROVIDER_KEY_VARS skips the check and is left to the SDK to reject.
 
     Raises:
         ConfigError: A required API key env var is missing.

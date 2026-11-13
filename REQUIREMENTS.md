@@ -26,7 +26,7 @@ Code resolves month or season phrases to a concrete future window relative to To
 - Examples: Today=2026-11-12, "Oct 10–13" → 2027-10-10..13, plus `DATES_ROLLED_FORWARD`; "February" → depart 2027-02-01; "November" (the current month) → depart tomorrow, 2026-11-13; start + end with no nights → nights = end − start; start + end + nights that disagree → nights wins, plus `END_DATE_IGNORED`
 - On failure: an impossible start (e.g. Feb 30) falls back to that month. An end with no start is ignored (`timeframe.month` if set, else 30 days out). Both add `DATES_ASSUMED`. Never an exception.
 - Status: done
-- Code: src/travel_agent/gate.py (resolve_dates)
+- Code: src/travel_agent/gate.py (ResolvedDates.resolve, ResolvedDates.stated_span)
 
 ### R3: Sufficiency gate (MUST)
 Code, not the LLM, decides between planning and asking. A critical gap means no destination and no preferences, **and** no timeframe. In that case the response is a `ClarificationRequest` that lists the missing fields, with one question for each drawn from a code template (no LLM). Every other gap is soft and gets a stated default.
@@ -39,7 +39,7 @@ Code, not the LLM, decides between planning and asking. A critical gap means no 
 ### R4: Mock tools (MUST)
 Three tools, each a thin wrapper over static JSON:
 - `find_destinations(preferences, month, near)` returns candidate cities with tags, weather by month, and a touristiness score.
-- `search_flights(origin, destination, depart_date, return_date)` returns all fares, with the price adjusted for season by code.
+- `search_flights(origin, destination, depart, travellers)` returns all round-trip fares, with the price adjusted for season by code.
 - `search_hotels(city, check_in, nights)` returns all properties: nightly rate, amenities, style.
 
 Each result carries a stable ID. An empty result is a normal return (`[]`, whose meaning each tool's docstring states), never an exception. `find_destinations` also filters by `region`, and by `name` (a city name or IATA code, ignoring the other filters). With preferences given, destinations matching none of them are dropped.
@@ -53,13 +53,13 @@ Each result carries a stable ID. An empty result is a normal return (`[]`, whose
 The planner LLM picks options by **ID only**. An output validator recomputes cost from the mock data and raises `ModelRetry` when any of these hold: an ID is unknown; IDs disagree (the hotel isn't in the destination, or the flight is the wrong route); a flight is missing while the brief has an origin; an excluded destination is chosen (an exact IATA code, or a case-insensitive name substring); a hard cap is exceeded (`total` checks flights + hotel, `excluding_flights` checks the hotel, `hotel_per_night` checks the room-night rate; approximate allows 10%); or a stated hotel requirement (amenity, min stars, style) is unmet. Soft budgets never trigger a retry. The model never does the arithmetic.
 - Handled by: LLM (choices) + code (validation, pricing)
 - Examples: "under $2000 for two" with the cheapest option at $2400 → retry → eventually `Infeasible`
-- On failure: when retries run out (N=3), code builds `Infeasible` from the last attempt the validator rejected (re-priced, with the violated constraint kinds). The planner may also return `Infeasible` directly when the tools show nothing fits. It must include its closest option's IDs, and code prices them. A constraint is never violated silently.
-- A 4th tool, `quote_trip(flight_id, hotel_id, nights)`, calls the same pricing function as the validator, so the model can check before it commits.
+- On failure: when retries run out (N=3), code builds `Infeasible` from the last attempt the validator rejected (re-priced, with the violated constraint kinds). The planner may also return `NoFeasiblePlan` directly when the tools show nothing fits. If something came close it includes those IDs, and code prices and checks them; if that closest option actually breaks nothing, the validator sends it back (the model can't give up on a valid plan). If no data matched at all, `closest` is null and the violation is `NO_DATA`. A constraint is never violated silently.
+- A 4th tool, `quote_trip(proposal)`, calls the same pricing function as the validator, so the model can check before it commits.
 - Status: done
 - Code: src/travel_agent/plan.py (enforce_constraints, plan_trip), pricing.py (check_proposal)
 
 ### R6: Typed response (MUST)
-`TripResult = TripSuggestion | ClarificationRequest | Infeasible | AgentError`, all pydantic. TripSuggestion has a single `option` (destination, reasoning, flight_id?, hotel_id, nights, cost breakdown computed by code), assumptions[], and caveats[]. Each caveat has a `kind` enum and text.
+`TripResult = TripSuggestion | ClarificationRequest | Infeasible | AgentError`, all pydantic. TripSuggestion has a single `option` (destination, reasoning, flight_id?, hotel_id, cost breakdown computed by code), `depart_date`/`return_date` (nights is their difference), assumptions[], and caveats[]. Each caveat has a `kind` enum and text.
 - Handled by: code
 - Examples: see R3, R5
 - On failure: n/a
@@ -67,7 +67,7 @@ The planner LLM picks options by **ID only**. An output validator recomputes cos
 - Code: src/travel_agent/models.py
 
 ### R7: CLI (MUST)
-`uv run travel-agent` (or `python -m travel_agent`) shows the example prompts to pick from, or `travel-agent "free text"`. Optional `--from IATA` simulates a device location (as a browser would provide with permission) and is used only when no origin was extracted. Optional `--today YYYY-MM-DD`. It prints the result as JSON (and a short human summary).
+`uv run travel-agent` (or `python -m travel_agent`) shows the example prompts to pick from, or `travel-agent "free text"`. Optional `--from IATA` simulates a device location (as a browser would provide with permission) and is used only when no origin was extracted. Optional `--today YYYY-MM-DD`. It prints the result as JSON. (A short human summary was cut; see Out of scope.)
 - Handled by: code
 - On failure: a missing or invalid API key prints a one-line actionable error and exits with code 2. This check runs before any LLM call.
 - Status: done
@@ -80,11 +80,11 @@ Models are set per stage with pydantic-ai model strings: `TRAVEL_AGENT_EXTRACTIO
 - Code: src/travel_agent/config.py, .env.example
 
 ### R9: Eval harness (MUST)
-`uv run travel-agent-eval` runs 9 cases: the 7 assignment examples, a contradictory one ($500 5-star Paris week), and a destination with no data. Each case carries:
-  - `expected_constraints`: a partial field match, scoring the **extractor**.
-  - `gold_constraints` + `planner_checks`: the planner runs on gold input, not on the extractor's output, so the two stages fail independently. Dimensions: (1) **outcome type**, (2) **constraint adherence** (budget, exclusions, amenities, origin), (3) **expected caveat kinds** present.
+`uv run travel-agent-eval` runs 9 cases: the 7 assignment examples, a contradictory one (a 5-star Barcelona week for $800; Paris isn't in the mock data), and a destination with no data (Reykjavik). Each case carries:
+  - `expected_constraints`: a partial field match, scoring the **extractor** (`fields`), plus `routing`: the real gate run on the extracted constraints must agree on ask vs. plan, since that's the decision a bad extraction changes.
+  - `gold_constraints` + `planner_checks`: the planner runs on gold input, not on the extractor's output, so the two stages fail independently. Dimensions: (1) **outcome type**, (2) **constraint adherence** (budget, nightly cap, amenities, style, allowed or forbidden destinations, region; origin is enforced by the validator and not re-scored), (3) **expected caveat kinds** present.
 
-  All scoring is deterministic (no LLM-as-judge). It writes `evals/report.md` with one table per stage. The gate (R3) is covered by unit tests, not the eval.
+  All scoring is deterministic (no LLM-as-judge). It writes `evals/report.md` with one table per stage. The gate's own logic (R3) is covered by unit tests; the eval only uses it for routing. `travel-agent-eval <case-id>...` runs a subset without overwriting the report.
 - Handled by: code
 - On failure: a case that errors scores 0 and is reported; the run continues.
 - Status: done
@@ -96,6 +96,7 @@ Setup in under 5 minutes; the decision log; known gaps.
 - Code: README.md, PROCESS.md, DECISIONS.md
 
 ## Out of scope
+- A human-readable CLI summary: cut for time; JSON is the contract.
 - Real travel APIs, pagination, fuzzy search: the assignment says so. Tools return every match.
 - Multi-turn: a ClarificationRequest is terminal. The user re-runs with more detail.
 - Multi-city itineraries: one destination per option.

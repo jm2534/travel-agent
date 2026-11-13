@@ -13,7 +13,7 @@ uv run travel-agent           # pick one of the 7 example prompts
 uv run travel-agent "Long weekend in Europe from SFO, great food" --today 2026-11-12
 uv run travel-agent "Somewhere warm in March" --from JFK   # --from = device-location fallback for origin
 uv run travel-agent-eval      # runs evals/cases.yaml, writes evals/report.md
-uv run pytest -q              # 86 tests, no network (models are faked)
+uv run pytest -q              # 100 tests, no network (models are faked)
 ```
 
 `python -m travel_agent` works too.

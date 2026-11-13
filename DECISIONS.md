@@ -36,3 +36,7 @@ One line each: X over Y because Z.
 ## Evals
 - Deterministic scoring over LLM-as-judge, because it gives a real, repeatable signal within the time budget. **Limitation:** reasoning quality isn't scored.
 - The planner is evaluated on gold constraints rather than the extractor's output, because a bad extraction would otherwise hide or fake planner failures.
+
+## Deferred at the deadline
+- Keeping `ClarificationRequest.missing` and the per-field `CLARIFYING_QUESTIONS` over collapsing them to one question, because they support partial clarification later. Today the gate always asks about everything missing.
+- Recording these review findings as debt over refactoring in the last minutes, because a green build mattered more than tidiness: one "retry budget exhausted" message covers both proposal rejections and tool-retry exhaustion; `PlannerDeps.last_rejected` stores unused violations; name/id matching is duplicated in `tools.find_destinations` and `pricing._exclusion_violations` (it belongs in `Destination.matches`); `gate.assess` is long (`_resolve_origin`/`_resolve_nights` would split it); some public models lack Google-style docstrings.

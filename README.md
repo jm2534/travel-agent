@@ -72,3 +72,7 @@ All scoring is deterministic. Expected outcomes were checked against `data/`; fo
 - **Quality words become hard requirements:** "nice hotel" → `min_stars=4`, which can make a request infeasible when a 3-star option would have satisfied the user.
 - **Mock data:** generated once by Haiku (`scripts/generate_fixtures.py`). Prices have two levels (peak 1.3×, off-peak 1×), and children pay full fare.
 - **Single run, nothing saved:** the eval runs each case once, with no variance across repeated runs.
+- **No origin, `total` cap:** with no origin, flights aren't priced, so a hard `total` budget is checked against the hotel cost only. Only the `FLIGHTS_NOT_PRICED` caveat signals this.
+- **Unknown provider prefix:** a model string whose provider isn't in `PROVIDER_KEY_VARS` skips the API key pre-check. A missing key then fails later, when that provider's SDK builds its client or makes its first call.
+- **Invalid API key output:** the CLI prints the provider's full JSON error before its one-line error, where R7 implies just the one line.
+- **Thin harness tests:** the eval scoring functions, the errored-case path (scores 0, run continues) and planner tool wrappers have no model-free unit tests yet. A real eval run exercises them.

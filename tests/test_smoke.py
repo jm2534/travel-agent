@@ -2,7 +2,6 @@
 
 import json
 
-import pytest
 from pydantic_ai import models
 from pydantic_ai.models.test import TestModel
 
@@ -12,7 +11,6 @@ from travel_agent.extract import extractor
 models.ALLOW_MODEL_REQUESTS = False
 
 
-@pytest.mark.xfail(raises=NotImplementedError, strict=True, reason="gate lands in slice 1")
 def test_cli_cheap_request_asks_for_clarification(monkeypatch, capsys):
     monkeypatch.setenv("TRAVEL_AGENT_EXTRACTION_MODEL", "test")
     monkeypatch.setenv("TRAVEL_AGENT_PLANNING_MODEL", "test")

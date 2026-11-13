@@ -21,19 +21,19 @@ An LLM extracts `TripConstraints` from the request: origin (IATA), destination o
 - Code: src/travel_agent/extract.py, models.py (TripConstraints)
 
 ### R2: Date resolution against Today (MUST)
-Code resolves month or season phrases to a concrete future window relative to Today. A window that has already passed rolls forward to next year, and a caveat is attached.
+Code resolves month or season phrases to a concrete future window relative to Today. An explicit start date that has already passed rolls forward to next year, with `DATES_ROLLED_FORWARD`. A month alone means its next occurrence, which is not a roll-forward. Whenever there is no explicit start, the dates are a guess and get `DATES_ASSUMED`. No timeframe at all departs 30 days out.
 - Handled by: code
-- Examples: Today=2026-11-12, "Oct 10–13" → 2027-10-10..13, plus caveat; "February" → Feb 2027
-- On failure: if the phrase can't be resolved, treat it as a soft gap and attach an assumption.
-- Status: todo
+- Examples: Today=2026-11-12, "Oct 10–13" → 2027-10-10..13, plus `DATES_ROLLED_FORWARD`; "February" → depart 2027-02-01; "November" (the current month) → depart tomorrow, 2026-11-13; start + end with no nights → nights = end − start; start + end + nights that disagree → nights wins, plus `END_DATE_IGNORED`
+- On failure: an impossible start (e.g. Feb 30) falls back to that month. An end with no start is ignored (`timeframe.month` if set, else 30 days out). Both add `DATES_ASSUMED`. Never an exception.
+- Status: done
 - Code: src/travel_agent/gate.py (resolve_dates)
 
 ### R3: Sufficiency gate (MUST)
 Code, not the LLM, decides between planning and asking. A critical gap means no destination and no preferences, **and** no timeframe. In that case the response is a `ClarificationRequest` that lists the missing fields, with one question for each drawn from a code template (no LLM). Every other gap is soft and gets a stated default.
 - Handled by: code
-- Examples: "Cheap." → ClarificationRequest(missing=[destination_or_preferences, timeframe]); missing origin and no `--from` → plan without flights, with caveat `FLIGHTS_NOT_PRICED`; missing origin with `--from JFK` → origin=JFK plus caveat `ORIGIN_FROM_DEVICE`; missing travellers → assume 2 adults, recorded as an assumption
+- Examples: "Cheap." → ClarificationRequest(missing=[destination_or_preferences, timeframe]); missing origin and no `--from` → plan without flights, with caveat `FLIGHTS_NOT_PRICED`; missing origin with `--from JFK` → origin=JFK plus caveat `ORIGIN_FROM_DEVICE`; missing travellers → assume 2 adults, recorded as an assumption; missing budget → caveat `NO_BUDGET`; only origin, budget, exclusions or hotel requirements given → still a ClarificationRequest (none of them says what or when)
 - On failure: n/a (pure function)
-- Status: todo
+- Status: done
 - Code: src/travel_agent/gate.py (assess)
 
 ### R4: Mock tools (MUST)
@@ -103,7 +103,7 @@ Setup in under 5 minutes; the decision log; known gaps.
 
 ## Assumptions
 - A2: Mock data is static JSON (17 destinations to start, so every example plus Santorini is covered; origins JFK, SFO, LIS), generated once by a committed Haiku script, with Santorini included so the exclusion can be tested. Seasonal pricing is a code multiplier, so data isn't stored per date. (confirmed)
-- A3: Defaults for soft gaps: 2 adults, nights from phrasing (long weekend=3, week=7), else 5. (unconfirmed)
+- A3: Defaults for soft gaps: 2 adults; nights from phrasing (long weekend=3, week=7), else 5; no timeframe → depart Today + 30 days. (confirmed)
 
 ## Decisions
 See `DECISIONS.md`.

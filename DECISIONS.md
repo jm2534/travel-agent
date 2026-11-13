@@ -25,6 +25,7 @@ One line each: X over Y because Z.
 - Code-template clarifying questions over LLM-phrased ones, because the gate is code and its output should be deterministic.
 - A `--from` device-location fallback for origin over always degrading to hotel-only, because a real client (a browser) would often have this. It's used only when the request names no origin, and it adds the `ORIGIN_FROM_DEVICE` caveat.
 - Budget as `{amount, scope, hard, approximate}` over a single number, because the examples mix total, excluding-flights, per-night and "flexible, but flag it".
+- When a stated end date conflicts with stated nights, nights win over the end date, because "tack on 5 days" phrasing makes nights the more deliberate signal. This is never silent: it adds the `END_DATE_IGNORED` caveat.
 - One option per suggestion over 1–3 ranked options, because ranking is overbuilding for now.
 
 ## Evals

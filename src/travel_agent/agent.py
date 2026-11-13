@@ -4,7 +4,7 @@ from datetime import date
 
 from pydantic_ai import ModelAPIError, ModelAuthenticationError, UnexpectedModelBehavior
 
-from travel_agent.catalog import load_catalog
+from travel_agent.catalog import Catalog
 from travel_agent.config import Config
 from travel_agent.extract import extract_constraints
 from travel_agent.gate import assess
@@ -31,7 +31,7 @@ def run_trip_agent(
         brief = assess(constraints, today, device_origin)
         if isinstance(brief, ClarificationRequest):
             return brief
-        return plan_trip(brief, config.planning_model, load_catalog())
+        return plan_trip(brief, config.planning_model, Catalog.load())
     except ModelAuthenticationError as e:
         return AgentError(kind="auth", message=f"Provider rejected the API key: {e}")
     except ModelAPIError as e:

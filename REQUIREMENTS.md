@@ -47,7 +47,7 @@ Each result carries a stable ID. An empty result is a normal return (`[]`, whose
 - Examples: search_flights("JFK","CUN",...) → ≥2 fares, cheapest first; search_flights("JFK","XXX",...) → []; search_hotels for 4 guests in a hotel whose rooms sleep 2 → priced as 2 rooms; find_destinations(near="LIS") → only destinations within 1500 km
 - On failure: an unknown city or route returns [], and the planner must handle it.
 - Status: done
-- Code: src/travel_agent/tools.py, catalog.py, pricing.py; fixtures in data/ (repo root)
+- Code: src/travel_agent/tools.py, catalog.py (records price themselves), pricing.py (trip cost and checks); fixtures in data/ (repo root)
 
 ### R5: Planner with code-enforced rules (MUST)
 The planner LLM picks options by **ID only**. An output validator recomputes cost from the mock data and raises `ModelRetry` when any of these hold: an ID is unknown; IDs disagree (the hotel isn't in the destination, or the flight is the wrong route); a flight is missing while the brief has an origin; an excluded destination is chosen (an exact IATA code, or a case-insensitive name substring); a hard cap is exceeded (`total` checks flights + hotel, `excluding_flights` checks the hotel, `hotel_per_night` checks the room-night rate; approximate allows 10%); or a stated hotel requirement (amenity, min stars, style) is unmet. Soft budgets never trigger a retry. The model never does the arithmetic.

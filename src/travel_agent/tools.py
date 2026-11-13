@@ -5,6 +5,7 @@ These take a Catalog directly, so they're testable without an agent; plan.py reg
 
 import math
 from datetime import date
+from typing import Self
 
 from pydantic import BaseModel
 
@@ -20,13 +21,7 @@ from travel_agent.models import (
     Violation,
     ViolationKind,
 )
-from travel_agent.pricing import (
-    check_proposal,
-    flight_price,
-    hotel_nightly,
-    price_proposal,
-    rooms_needed,
-)
+from travel_agent.pricing import check_proposal, price_proposal
 
 NEAR_RADIUS_KM = 1500
 ORIGIN_AIRPORT_COORDS = {"JFK": (40.64, -73.78), "SFO": (37.62, -122.38), "LIS": (38.77, -9.13)}
@@ -36,6 +31,15 @@ class DestinationMatch(BaseModel):
     destination: Destination
     avg_high_c: float
     matched_tags: list[Tag]
+
+    @classmethod
+    def of(cls, destination: Destination, month: int, preferences: list[Tag]) -> Self:
+        """A destination annotated with its weather that month and the preferences it meets."""
+        return cls(
+            destination=destination,
+            avg_high_c=destination.avg_high_c[month - 1],
+            matched_tags=[t for t in preferences if t in destination.tags],
+        )
 
 
 class FlightQuote(BaseModel):
@@ -83,7 +87,7 @@ def find_destinations(
             for d in catalog.destinations.values()
             if term == d.id.casefold() or term in d.name.casefold()
         ]
-        return [_match(d, month, preferences) for d in found]
+        return [DestinationMatch.of(d, month, preferences) for d in found]
 
     candidates = list(catalog.destinations.values())
     if region is not None:
@@ -96,7 +100,7 @@ def find_destinations(
             d for d in candidates if 0 < _distance_km(center, (d.lat, d.lon)) <= NEAR_RADIUS_KM
         ]
 
-    matches = [_match(d, month, preferences) for d in candidates]
+    matches = [DestinationMatch.of(d, month, preferences) for d in candidates]
     if preferences:
         matches = [m for m in matches if m.matched_tags]
     return sorted(matches, key=lambda m: (-len(m.matched_tags), m.destination.id))
@@ -114,7 +118,7 @@ def search_flights(
     if dest is None:
         return []
     quotes = [
-        FlightQuote(flight=f, total_usd=flight_price(f, dest, depart, travellers))
+        FlightQuote(flight=f, total_usd=f.price_for(dest, depart, travellers))
         for f in catalog.flights.values()
         if f.origin == origin and f.destination == destination
     ]
@@ -132,8 +136,8 @@ def search_hotels(
     for hotel in catalog.hotels.values():
         if hotel.city != city:
             continue
-        nightly = hotel_nightly(hotel, dest, check_in)
-        rooms = rooms_needed(hotel, guests)
+        nightly = hotel.nightly_rate(dest, check_in)
+        rooms = hotel.rooms_for(guests)
         total = round(nightly * rooms * nights, 2)
         quotes.append(HotelQuote(hotel=hotel, nightly_usd=nightly, rooms=rooms, total_usd=total))
     return sorted(quotes, key=lambda q: q.total_usd)
@@ -145,15 +149,6 @@ def quote_trip(catalog: Catalog, brief: PlanningBrief, proposal: Proposal) -> Tr
     if any(v.kind == ViolationKind.UNKNOWN_ID for v in violations):
         return TripQuote(cost=None, violations=violations)
     return TripQuote(cost=price_proposal(catalog, brief, proposal), violations=violations)
-
-
-def _match(destination: Destination, month: int, preferences: list[Tag]) -> DestinationMatch:
-    """A destination annotated with its weather that month and the preferences it meets."""
-    return DestinationMatch(
-        destination=destination,
-        avg_high_c=destination.avg_high_c[month - 1],
-        matched_tags=[t for t in preferences if t in destination.tags],
-    )
 
 
 def _coords_of(catalog: Catalog, airport: AirportCode) -> tuple[float, float] | None:

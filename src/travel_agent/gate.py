@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 from datetime import date, timedelta
+from typing import Self
 
 from travel_agent.models import (
     AirportCode,
@@ -43,31 +44,86 @@ class ResolvedDates:
     rolled_forward: bool
     assumed: bool
 
+    @classmethod
+    def resolve(cls, timeframe: Timeframe | None, nights: int, today: date) -> Self:
+        """Turn a timeframe into concrete dates on or after today.
 
-def resolve_dates(timeframe: Timeframe | None, nights: int, today: date) -> ResolvedDates:
-    """Turn a timeframe into concrete dates on or after today.
+        An explicit start wins. Without one, a month departs on its 1st (tomorrow if it's the
+        current month), and nothing at all departs 30 days out. An impossible start day (Feb 30)
+        falls back to its month. The return date is always depart + nights; reconciling an
+        explicit end is assess's job.
 
-    An explicit start wins. Without one, a month departs on its 1st (tomorrow if it's the current
-    month), and nothing at all departs 30 days out. An impossible start day (Feb 30) falls back to
-    its month. The return date is always depart + nights; reconciling an explicit end is assess's
-    job.
+        Args:
+            timeframe: What the extractor found, if anything.
+            nights: Length of stay.
+            today: The reference date.
+        """
+        explicit = ResolvedDates._explicit_start(timeframe, today)
+        if explicit is not None:
+            depart, rolled_forward = explicit
+            return cls(depart, depart + timedelta(days=nights), rolled_forward, False)
 
-    Args:
-        timeframe: What the extractor found, if anything.
-        nights: Length of stay.
-        today: The reference date.
-    """
-    explicit = _explicit_start(timeframe, today)
-    if explicit is not None:
-        depart, rolled_forward = explicit
-        return ResolvedDates(depart, depart + timedelta(days=nights), rolled_forward, False)
+        month = ResolvedDates._fallback_month(timeframe)
+        if month is None:
+            depart = today + timedelta(days=DAYS_AHEAD_WHEN_UNDATED)
+        else:
+            depart = ResolvedDates._next_start_of_month(month, today)
+        return cls(depart, depart + timedelta(days=nights), False, True)
 
-    month = _fallback_month(timeframe)
-    if month is None:
-        depart = today + timedelta(days=DAYS_AHEAD_WHEN_UNDATED)
-    else:
-        depart = _next_start_of_month(month, today)
-    return ResolvedDates(depart, depart + timedelta(days=nights), False, True)
+    @staticmethod
+    def _explicit_start(timeframe: Timeframe | None, today: date) -> tuple[date, bool] | None:
+        """The stated start on or after today, and whether it moved to next year.
+
+        None if there's no start or it's not a real date.
+        """
+        if timeframe is None or timeframe.start is None:
+            return None
+        this_year = ResolvedDates._as_date(timeframe.start, today.year)
+        if this_year is None:
+            return None
+        if this_year >= today:
+            return this_year, False
+        next_year = ResolvedDates._as_date(timeframe.start, today.year + 1)
+        return (next_year, True) if next_year is not None else None
+
+    @staticmethod
+    def stated_span(timeframe: Timeframe | None, today: date) -> int | None:
+        """Nights between an explicit start and end, if both are given and valid."""
+        if timeframe is None or timeframe.end is None:
+            return None
+        explicit = ResolvedDates._explicit_start(timeframe, today)
+        if explicit is None:
+            return None
+        depart = explicit[0]
+        end = ResolvedDates._as_date(timeframe.end, depart.year)
+        if end is not None and end <= depart:
+            end = ResolvedDates._as_date(timeframe.end, depart.year + 1)  # range crosses New Year
+        return (end - depart).days if end is not None else None
+
+    @staticmethod
+    def _fallback_month(timeframe: Timeframe | None) -> int | None:
+        """The month to plan in without a usable start: the stated month, else the start's."""
+        if timeframe is None:
+            return None
+        if timeframe.month is not None:
+            return timeframe.month
+        return timeframe.start.month if timeframe.start is not None else None
+
+    @staticmethod
+    def _next_start_of_month(month: int, today: date) -> date:
+        """The 1st of the month's next occurrence, or tomorrow if that month is the current one."""
+        if month == today.month:
+            return today + timedelta(days=1)
+        first = date(today.year, month, 1)
+        return first if first > today else date(today.year + 1, month, 1)
+
+    @staticmethod
+    def _as_date(month_day: MonthDay, year: int) -> date | None:
+        """The calendar date, or None if it doesn't exist in that year (e.g. Feb 30)."""
+        try:
+            return date(year, month_day.month, month_day.day)
+        except ValueError:
+            return None
 
 
 def assess(
@@ -118,7 +174,7 @@ def assess(
             Assumption(field="travellers", value="2 adults", reason="Party size not stated.")
         )
 
-    stated_span = _stated_span(constraints.timeframe, today)
+    stated_span = ResolvedDates.stated_span(constraints.timeframe, today)
     nights = constraints.nights
     if nights is None and stated_span is not None:
         nights = stated_span
@@ -136,7 +192,7 @@ def assess(
             )
         )
 
-    dates = resolve_dates(constraints.timeframe, nights, today)
+    dates = ResolvedDates.resolve(constraints.timeframe, nights, today)
     if dates.rolled_forward:
         caveats.append(
             Caveat(
@@ -180,58 +236,3 @@ def _says_when(constraints: TripConstraints) -> bool:
     """Whether the request gives any timeframe at all."""
     timeframe = constraints.timeframe
     return timeframe is not None and bool(timeframe.start or timeframe.end or timeframe.month)
-
-
-def _explicit_start(timeframe: Timeframe | None, today: date) -> tuple[date, bool] | None:
-    """The stated start on or after today, and whether it moved to next year.
-
-    None if there's no start or it's not a real date.
-    """
-    if timeframe is None or timeframe.start is None:
-        return None
-    this_year = _as_date(timeframe.start, today.year)
-    if this_year is None:
-        return None
-    if this_year >= today:
-        return this_year, False
-    next_year = _as_date(timeframe.start, today.year + 1)
-    return (next_year, True) if next_year is not None else None
-
-
-def _stated_span(timeframe: Timeframe | None, today: date) -> int | None:
-    """Nights between an explicit start and end, if both are given and valid."""
-    if timeframe is None or timeframe.end is None:
-        return None
-    explicit = _explicit_start(timeframe, today)
-    if explicit is None:
-        return None
-    depart = explicit[0]
-    end = _as_date(timeframe.end, depart.year)
-    if end is not None and end <= depart:
-        end = _as_date(timeframe.end, depart.year + 1)  # range crosses New Year
-    return (end - depart).days if end is not None else None
-
-
-def _fallback_month(timeframe: Timeframe | None) -> int | None:
-    """The month to plan in without a usable explicit start: the stated month, else the start's."""
-    if timeframe is None:
-        return None
-    if timeframe.month is not None:
-        return timeframe.month
-    return timeframe.start.month if timeframe.start is not None else None
-
-
-def _next_start_of_month(month: int, today: date) -> date:
-    """The 1st of the month's next occurrence, or tomorrow if that month is the current one."""
-    if month == today.month:
-        return today + timedelta(days=1)
-    first = date(today.year, month, 1)
-    return first if first > today else date(today.year + 1, month, 1)
-
-
-def _as_date(month_day: MonthDay, year: int) -> date | None:
-    """The calendar date, or None if it doesn't exist in that year (e.g. Feb 30)."""
-    try:
-        return date(year, month_day.month, month_day.day)
-    except ValueError:
-        return None

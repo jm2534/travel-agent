@@ -1,10 +1,8 @@
 """The single source of truth for cost, used by the tools (quotes) and the planner's validator."""
 
-import math
-from datetime import date
-
-from travel_agent.catalog import Catalog, Destination, Flight, Hotel
+from travel_agent.catalog import Catalog, Destination, Hotel
 from travel_agent.models import (
+    Budget,
     CostBreakdown,
     PlanningBrief,
     Proposal,
@@ -12,35 +10,7 @@ from travel_agent.models import (
     ViolationKind,
 )
 
-PEAK_MULTIPLIER = 1.3
 APPROXIMATE_TOLERANCE = 0.10
-
-
-def season_multiplier(destination: Destination, on: date) -> float:
-    """Price multiplier for a date: PEAK_MULTIPLIER in the destination's peak months, else 1.0."""
-    return PEAK_MULTIPLIER if on.month in destination.peak_months else 1.0
-
-
-def flight_price(flight: Flight, destination: Destination, depart: date, travellers: int) -> float:
-    """Round-trip fare for the whole party, adjusted for season at departure.
-
-    Args:
-        flight: The fare.
-        destination: Its destination, for the season.
-        depart: Departure date.
-        travellers: Party size; children pay full fare.
-    """
-    return round(flight.base_fare_usd * season_multiplier(destination, depart) * travellers, 2)
-
-
-def hotel_nightly(hotel: Hotel, destination: Destination, check_in: date) -> float:
-    """Price per room-night, adjusted for season at check-in."""
-    return round(hotel.base_nightly_usd * season_multiplier(destination, check_in), 2)
-
-
-def rooms_needed(hotel: Hotel, guests: int) -> int:
-    """Enough rooms for everyone, given the hotel's per-room capacity."""
-    return math.ceil(guests / hotel.sleeps)
 
 
 def price_proposal(catalog: Catalog, brief: PlanningBrief, proposal: Proposal) -> CostBreakdown:
@@ -56,14 +26,14 @@ def price_proposal(catalog: Catalog, brief: PlanningBrief, proposal: Proposal) -
     """
     destination = catalog.destinations[proposal.destination_id]
     hotel = catalog.hotels[proposal.hotel_id]
-    nightly = hotel_nightly(hotel, destination, brief.depart_date)
-    rooms = rooms_needed(hotel, brief.party_size)
+    nightly = hotel.nightly_rate(destination, brief.depart_date)
+    rooms = hotel.rooms_for(brief.party_size)
     hotel_usd = round(nightly * rooms * brief.nights, 2)
 
     flights_usd = None
     if proposal.flight_id is not None:
         flight = catalog.flights[proposal.flight_id]
-        flights_usd = flight_price(flight, destination, brief.depart_date, brief.party_size)
+        flights_usd = flight.price_for(destination, brief.depart_date, brief.party_size)
 
     return CostBreakdown(
         flights_usd=flights_usd,
@@ -160,23 +130,36 @@ def _hotel_requirement_violations(brief: PlanningBrief, hotel: Hotel) -> list[Vi
     return violations
 
 
+def spend_against(budget: Budget, cost: CostBreakdown) -> tuple[float, str]:
+    """What a budget's scope measures in this cost, and a label for it.
+
+    Args:
+        budget: The user's budget; only its scope matters here.
+        cost: A priced proposal.
+
+    Returns:
+        (amount spent under that scope, human label), e.g. (2600.0, "Total").
+    """
+    if budget.scope == "total":
+        return cost.total_usd, "Total"
+    if budget.scope == "excluding_flights":
+        return cost.hotel_usd, "Hotel total"
+    return cost.hotel_nightly_usd, "Nightly rate"
+
+
 def _budget_violations(brief: PlanningBrief, cost: CostBreakdown) -> list[Violation]:
-    """A hard budget exceeded for its scope. Soft budgets are reported later as caveats."""
+    """A hard budget exceeded for its scope. Soft budgets are reported as caveats by plan.py."""
     budget = brief.constraints.budget
     if budget is None or not budget.hard:
         return []
 
     cap = budget.amount_usd * (1 + APPROXIMATE_TOLERANCE if budget.approximate else 1)
-    if budget.scope == "total":
-        spent, kind, label = cost.total_usd, ViolationKind.OVER_BUDGET, "Total"
-    elif budget.scope == "excluding_flights":
-        spent, kind, label = cost.hotel_usd, ViolationKind.OVER_BUDGET, "Hotel total"
-    else:
-        spent, kind, label = cost.hotel_nightly_usd, ViolationKind.OVER_NIGHTLY_CAP, "Nightly rate"
-
-    if spent > cap:
-        return [_violation(kind, f"{label} ${spent:,.0f} exceeds the ${cap:,.0f} limit.")]
-    return []
+    spent, label = spend_against(budget, cost)
+    if spent <= cap:
+        return []
+    is_nightly = budget.scope == "hotel_per_night"
+    kind = ViolationKind.OVER_NIGHTLY_CAP if is_nightly else ViolationKind.OVER_BUDGET
+    return [_violation(kind, f"{label} ${spent:,.0f} exceeds the ${cap:,.0f} limit.")]
 
 
 def _violation(kind: ViolationKind, detail: str) -> Violation:

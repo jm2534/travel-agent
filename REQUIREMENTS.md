@@ -70,13 +70,13 @@ The planner LLM picks options by **ID only**. An output validator recomputes cos
 `uv run travel-agent` (or `python -m travel_agent`) shows the example prompts to pick from, or `travel-agent "free text"`. Optional `--from IATA` simulates a device location (as a browser would provide with permission) and is used only when no origin was extracted. Optional `--today YYYY-MM-DD`. It prints the result as JSON (and a short human summary).
 - Handled by: code
 - On failure: a missing or invalid API key prints a one-line actionable error and exits with code 2. This check runs before any LLM call.
-- Status: todo
+- Status: done
 - Code: src/travel_agent/cli.py, __main__.py
 
 ### R8: Configurable provider (MUST)
 Models are set per stage with pydantic-ai model strings: `TRAVEL_AGENT_EXTRACTION_MODEL` (default `anthropic:claude-haiku-5-5`) and `TRAVEL_AGENT_PLANNING_MODEL` (default `anthropic:claude-sonnet-5-5`). The key is read from the provider's standard env var through `.env`, which is git-ignored. `.env.example` is committed.
 - Handled by: code
-- Status: todo
+- Status: done
 - Code: src/travel_agent/config.py, .env.example
 
 ### R9: Eval harness (MUST)
@@ -92,7 +92,7 @@ Models are set per stage with pydantic-ai model strings: `TRAVEL_AGENT_EXTRACTIO
 
 ### R10: README / PROCESS (MUST)
 Setup in under 5 minutes; the decision log; known gaps.
-- Status: todo
+- Status: done
 - Code: README.md, PROCESS.md, DECISIONS.md
 
 ## Out of scope

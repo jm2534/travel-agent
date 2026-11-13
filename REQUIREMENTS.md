@@ -55,7 +55,7 @@ The planner LLM picks options by **ID only**. An output validator recomputes cos
 - Examples: "under $2000 for two" with the cheapest option at $2400 → retry → eventually `Infeasible`
 - On failure: when retries run out (N=3), code builds `Infeasible` from the last attempt the validator rejected (re-priced, with the violated constraint kinds). The planner may also return `Infeasible` directly when the tools show nothing fits. It must include its closest option's IDs, and code prices them. A constraint is never violated silently.
 - A 4th tool, `quote_trip(flight_id, hotel_id, nights)`, calls the same pricing function as the validator, so the model can check before it commits.
-- Status: todo
+- Status: done
 - Code: src/travel_agent/plan.py (enforce_constraints, plan_trip), pricing.py (check_proposal)
 
 ### R6: Typed response (MUST)
@@ -63,7 +63,7 @@ The planner LLM picks options by **ID only**. An output validator recomputes cos
 - Handled by: code
 - Examples: see R3, R5
 - On failure: n/a
-- Status: todo
+- Status: done
 - Code: src/travel_agent/models.py
 
 ### R7: CLI (MUST)

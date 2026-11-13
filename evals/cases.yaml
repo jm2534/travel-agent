@@ -50,7 +50,7 @@
     max_nightly_usd: 300
     required_style: boutique
     allowed_regions: [europe]
-    expected_caveats: [DATES_ASSUMED, NO_BUDGET]
+    expected_caveats: [DATES_ASSUMED]  # the $300/night cap is a budget, so no NO_BUDGET
 
 - id: family-spring-break-pool
   request: "Family of 4 (kids 6 and 9), warm weather over spring break, ~$5k all-in. Need a place with a pool."
@@ -91,7 +91,7 @@
   planner_checks:
     outcome: suggestion
     forbidden_destinations: [JTR]
-    expected_caveats: [FLIGHTS_NOT_PRICED]
+    expected_caveats: [FLIGHTS_NOT_PRICED, DATES_ASSUMED]
 
 - id: lisbon-wedding-add-on
   request: "I'll be in Lisbon Oct 10–13 for a wedding. Want to tack on 5 days somewhere nearby. Already have the flight to Lisbon."
@@ -128,7 +128,7 @@
     outcome: suggestion
     allowed_destinations: [HND]
     max_hotel_usd: 6000
-    expected_caveats: [FLIGHTS_NOT_PRICED]
+    expected_caveats: [FLIGHTS_NOT_PRICED, DATES_ASSUMED]
 
 - id: cheap
   request: "Cheap."
@@ -157,6 +157,7 @@
     hotel: {min_stars: 5}
   planner_checks:
     outcome: infeasible  # Barcelona has no 5-star hotel, and $800 can't cover the flights anyway
+    expected_caveats: [DATES_ASSUMED]
 
 - id: destination-without-data
   request: "Five nights in Reykjavik in March from SFO to see the northern lights."
@@ -172,4 +173,4 @@
     nights: 5
   planner_checks:
     outcome: infeasible
-    expected_caveats: [NO_BUDGET]
+    expected_caveats: [DATES_ASSUMED, NO_BUDGET]

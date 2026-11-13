@@ -3,6 +3,8 @@
 import pytest
 
 from travel_agent.eval_harness import EvalCase, score_extraction
+from travel_agent.gate import assess
+from travel_agent.models import CaveatKind, ClarificationRequest
 
 CASES = EvalCase.load_all()
 
@@ -19,6 +21,30 @@ def test_gold_constraints_satisfy_their_own_expectations(case):
 
     assert scores["fields"].passed, scores["fields"].detail
     assert scores["routing"].passed, scores["routing"].detail
+
+
+GATE_CAVEATS = {
+    CaveatKind.FLIGHTS_NOT_PRICED,
+    CaveatKind.ORIGIN_FROM_DEVICE,
+    CaveatKind.DATES_ROLLED_FORWARD,
+    CaveatKind.DATES_ASSUMED,
+    CaveatKind.NO_BUDGET,
+    CaveatKind.END_DATE_IGNORED,
+}
+
+
+@pytest.mark.parametrize("case", CASES, ids=[c.id for c in CASES])
+def test_expected_gate_caveats_are_exactly_what_the_gate_produces(case):
+    """The gate is deterministic, so a case's expected gate caveats must match it exactly.
+
+    Catches a wrong expectation (eval run 1: NO_BUDGET expected on a case with a nightly cap)
+    without spending a model call. Planner-produced caveats (SOFT_BUDGET_EXCEEDED) are excluded.
+    """
+    brief = assess(case.gold_constraints, case.today, case.device_origin)
+    produced = set() if isinstance(brief, ClarificationRequest) else {c.kind for c in brief.caveats}
+    expected = set(case.planner_checks.expected_caveats) & GATE_CAVEATS
+
+    assert expected == produced
 
 
 def test_wrong_extraction_fails_fields_with_detail():

@@ -34,7 +34,7 @@ Extraction model: `anthropic:claude-haiku-5-5`; planning model: `anthropic:claud
 | europe-long-weekend-sfo | ✅ suggestion | ✅ OPO/H-OPO-3 $2,165 | ✅ ok |
 | family-spring-break-pool | ✅ suggestion | ✅ PUJ/H-PUJ-1 $2,210 | ✅ ok |
 | anniversary-not-santorini | ✅ suggestion | ✅ TIV/H-TIV-3 $1,145 | ✅ ok |
-| lisbon-wedding-add-on | ✅ suggestion | ✅ FNC/H-FNC-3 $2,235 | ✅ ok |
+| lisbon-wedding-add-on | ✅ suggestion | ✅ OPO/H-OPO-3 $1,335 | ✅ ok |
 | tokyo-repeat-visit | ✅ suggestion | ✅ HND/H-HND-2 $3,731 | ✅ ok |
 | cheap | ✅ clarification | ✅ n/a (no plan) | ✅ ok |
 | contradictory-luxury-on-shoestring | ✅ infeasible | ✅ n/a (no plan) | ✅ ok |

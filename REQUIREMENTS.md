@@ -87,7 +87,7 @@ Models are set per stage with pydantic-ai model strings: `TRAVEL_AGENT_EXTRACTIO
   All scoring is deterministic (no LLM-as-judge). It writes `evals/report.md` with one table per stage. The gate (R3) is covered by unit tests, not the eval.
 - Handled by: code
 - On failure: a case that errors scores 0 and is reported; the run continues.
-- Status: todo
+- Status: tested
 - Code: src/travel_agent/eval_harness.py, evals/
 
 ### R10: README / PROCESS (MUST)

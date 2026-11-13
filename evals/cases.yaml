@@ -1,0 +1,175 @@
+# Eval cases. Each is scored twice, independently:
+#   expected_constraints: a partial match against the extractor's output. Dotted paths; for a
+#     list, the expected items must all be present (extra items are fine).
+#   gold_constraints + planner_checks: the planner runs on these gold constraints, NOT on the
+#     extractor's output, so a bad extraction can't hide or fake a planner failure.
+# Expected outcomes were checked against data/ (e.g. Barcelona has no 5-star hotel).
+
+- id: beach-jfk-tight-budget
+  request: "Relaxing beach week in February under $2000 for two, leaving from JFK. Want a nice hotel."
+  expected_constraints:
+    origin: JFK
+    timeframe.month: 2
+    nights: 7
+    travellers.adults: 2
+    budget.amount_usd: 2000
+    budget.scope: total
+    budget.hard: true
+    preferences: [beach]
+  gold_constraints:
+    origin: JFK
+    preferences: [beach, relaxing]
+    timeframe: {month: 2}
+    nights: 7
+    travellers: {adults: 2}
+    budget: {amount_usd: 2000, scope: total, hard: true}
+    hotel: {min_stars: 4}
+  planner_checks:
+    outcome: infeasible  # cheapest 4-star beach week is ~$3.1k in this data
+    expected_caveats: [DATES_ASSUMED]
+
+- id: europe-long-weekend-sfo
+  request: "Long weekend in Europe, flying from SFO. Walkable city, great food, boutique hotel under $300/night."
+  expected_constraints:
+    origin: SFO
+    region: europe
+    nights: 3
+    preferences: [walkable, food]
+    hotel.style: boutique
+    budget.amount_usd: 300
+    budget.scope: hotel_per_night
+  gold_constraints:
+    origin: SFO
+    region: europe
+    preferences: [walkable, food]
+    nights: 3
+    budget: {amount_usd: 300, scope: hotel_per_night, hard: true}
+    hotel: {style: boutique}
+  planner_checks:
+    outcome: suggestion
+    max_nightly_usd: 300
+    required_style: boutique
+    allowed_regions: [europe]
+    expected_caveats: [DATES_ASSUMED, NO_BUDGET]
+
+- id: family-spring-break-pool
+  request: "Family of 4 (kids 6 and 9), warm weather over spring break, ~$5k all-in. Need a place with a pool."
+  expected_constraints:
+    origin: null
+    timeframe.month: 3
+    travellers.adults: 2
+    travellers.children_ages: [6, 9]
+    budget.amount_usd: 5000
+    budget.approximate: true
+    hotel.amenities: [pool]
+    preferences: [warm]
+  gold_constraints:
+    preferences: [warm, family]
+    timeframe: {month: 3}
+    travellers: {adults: 2, children_ages: [6, 9]}
+    budget: {amount_usd: 5000, scope: total, hard: true, approximate: true}
+    hotel: {amenities: [pool]}
+  planner_checks:
+    outcome: suggestion
+    max_total_usd: 5500
+    required_amenities: [pool]
+    expected_caveats: [FLIGHTS_NOT_PRICED, DATES_ASSUMED]
+
+- id: anniversary-not-santorini
+  request: "Anniversary trip in May, somewhere romantic and not too touristy. We hated Santorini. Budget flexible but flag if it's blowing past $4k."
+  expected_constraints:
+    timeframe.month: 5
+    preferences: [romantic]
+    excluded_destinations: [Santorini]
+    budget.amount_usd: 4000
+    budget.hard: false
+  gold_constraints:
+    preferences: [romantic, quiet]
+    excluded_destinations: [Santorini]
+    timeframe: {month: 5}
+    budget: {amount_usd: 4000, scope: total, hard: false}
+  planner_checks:
+    outcome: suggestion
+    forbidden_destinations: [JTR]
+    expected_caveats: [FLIGHTS_NOT_PRICED]
+
+- id: lisbon-wedding-add-on
+  request: "I'll be in Lisbon Oct 10–13 for a wedding. Want to tack on 5 days somewhere nearby. Already have the flight to Lisbon."
+  expected_constraints:
+    origin: LIS
+    near: LIS
+    nights: 5
+    timeframe.start.month: 10
+  gold_constraints:
+    origin: LIS
+    near: LIS
+    timeframe: {start: {month: 10, day: 13}}
+    nights: 5
+  planner_checks:
+    outcome: suggestion
+    allowed_destinations: [OPO, SVQ, FNC, RAK, BCN, LYS]  # within 1500 km of LIS
+    expected_caveats: [DATES_ROLLED_FORWARD, NO_BUDGET]
+
+- id: tokyo-repeat-visit
+  request: "Tokyo for 8 days in November, two adults, $6k budget excluding flights. We've been once before."
+  expected_constraints:
+    destination: Tokyo
+    timeframe.month: 11
+    travellers.adults: 2
+    budget.amount_usd: 6000
+    budget.scope: excluding_flights
+  gold_constraints:
+    destination: Tokyo
+    timeframe: {month: 11}
+    nights: 7
+    travellers: {adults: 2}
+    budget: {amount_usd: 6000, scope: excluding_flights, hard: true}
+  planner_checks:
+    outcome: suggestion
+    allowed_destinations: [HND]
+    max_hotel_usd: 6000
+    expected_caveats: [FLIGHTS_NOT_PRICED]
+
+- id: cheap
+  request: "Cheap."
+  expected_constraints:
+    destination: null
+    timeframe: null
+    preferences: []
+  gold_constraints: {}
+  planner_checks:
+    outcome: clarification
+
+- id: contradictory-luxury-on-shoestring
+  request: "A week in Barcelona at a 5-star hotel, $800 total for two of us, from JFK, in February."
+  expected_constraints:
+    origin: JFK
+    destination: Barcelona
+    hotel.min_stars: 5
+    budget.amount_usd: 800
+  gold_constraints:
+    origin: JFK
+    destination: Barcelona
+    timeframe: {month: 2}
+    nights: 7
+    travellers: {adults: 2}
+    budget: {amount_usd: 800, scope: total, hard: true}
+    hotel: {min_stars: 5}
+  planner_checks:
+    outcome: infeasible  # Barcelona has no 5-star hotel, and $800 can't cover the flights anyway
+
+- id: destination-without-data
+  request: "Five nights in Reykjavik in March from SFO to see the northern lights."
+  expected_constraints:
+    origin: SFO
+    destination: Reykjavik
+    nights: 5
+    timeframe.month: 3
+  gold_constraints:
+    origin: SFO
+    destination: Reykjavik
+    timeframe: {month: 3}
+    nights: 5
+  planner_checks:
+    outcome: infeasible
+    expected_caveats: [NO_BUDGET]

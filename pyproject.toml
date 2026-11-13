@@ -1,14 +1,31 @@
 [project]
 name = "travel-agent"
 version = "0.1.0"
-description = "Add your description here"
+description = "Single-turn trip idea agent with mock travel tools"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "pydantic-ai-slim[anthropic]>=2.68.0",
+    "python-dotenv>=1.2.4",
+    "pyyaml>=6.0.3",
+]
 
 [project.scripts]
 travel-agent = "travel_agent:main"
+travel-agent-eval = "travel_agent.eval_harness:main"
 
 [build-system]
 requires = ["uv_build>=0.13.5,<0.14.0"]
 build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.5",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
